@@ -15,3 +15,7 @@
 1. `git clone https://github.com/imanuelnickles/fproject`
 2. `cd fproject`
 3. `composer install`
+
+## Environment Config
+1. `.env` -> `development`
+2. `.env.production` -> `production`
