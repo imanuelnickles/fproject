@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLeasesTable extends Migration
+class CreateContractsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateLeasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('leases', function (Blueprint $table) {
-            $table->increments('lease_id');
+        Schema::create('contracts', function (Blueprint $table) {
+            $table->increments('contract_id');
+            $table->integer('property_id');
+            $table->integer('tenant_id');
             $table->date('start_date');
             $table->date('end_date');
-            $table->integer('amount');
-            $table->integer('payment_freq');
-            $table->integer('payment_day');
-            
+            $table->date('contract_date');
+
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateLeasesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('leases');
+        Schema::dropIfExists('contracts');
     }
 }

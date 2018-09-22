@@ -22,9 +22,9 @@ class CreateTenantsTable extends Migration
             $table->string('mobile');
             $table->string('phone');
             $table->date('dob');
-            $table->string('identity');
-            $table->string('current_address');
-            $table->text('notes');
+            $table->string('id_number');
+            $table->string('address');
+            $table->text('notes')->default('');
 
             $table->timestamps();
         });
