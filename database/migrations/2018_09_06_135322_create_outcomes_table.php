@@ -17,7 +17,7 @@ class CreateOutcomesTable extends Migration
             $table->increments('outcome_id');
             $table->integer('property_id')->unsigned();
             $table->date('payment_date');
-            $table->integer('total')->unsigned();
+            $table->integer('amount')->unsigned();
             $table->timestamps();
         });
     }
