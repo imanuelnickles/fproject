@@ -17,6 +17,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// Middleware
 Route::middleware(['auth', 'subscription'])->group(function(){
+    // Dashboard
     Route::get('/home', 'HomeController@index')->name('home');
+
+    // Prefix tenant
+    Route::prefix('tenant')->group(function(){
+        Route::get('/add','TenantController@create')->name('add_tenant');
+        Route::post('/add','TenantController@store')->name('save_new_tenant');
+    });
 });
