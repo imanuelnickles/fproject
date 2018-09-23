@@ -19,8 +19,8 @@ class CreateTenantsTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email');
-            $table->string('mobile');
-            $table->string('phone');
+            $table->string('mobile')->nullable();
+            $table->string('phone')->nullable();
             $table->date('dob');
             $table->string('id_number');
             $table->string('address');
