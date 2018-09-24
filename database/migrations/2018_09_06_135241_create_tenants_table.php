@@ -15,6 +15,7 @@ class CreateTenantsTable extends Migration
     {
         Schema::create('tenants', function (Blueprint $table) {
             $table->increments('tenant_id');
+            $table->integer('user_id')->unsigned();
             $table->string('title');
             $table->string('first_name');
             $table->string('last_name');
@@ -24,8 +25,8 @@ class CreateTenantsTable extends Migration
             $table->date('dob');
             $table->string('id_number');
             $table->string('address');
-            $table->text('notes')->default('');
-
+            $table->text('notes')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

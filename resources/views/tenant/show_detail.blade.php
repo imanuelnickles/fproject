@@ -2,20 +2,21 @@
 @section('content')
 <section class="content-header">
       <h1>
-        Tambah Baru Penyewa
+        Lihat Detail Penyewa
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i>Penyewa</a></li>
-        <li class="active">Tambah Baru</li>
+        <li>Lihat Daftar</li>
+        <li>Lihat Detail</li>
       </ol>
 </section>
 <section class="content">
-        <div class="box box-danger">
+<div class="box box-danger">
             <!-- <div class="box-header">
                 <h3 class="box-title">Input masks</h3>
             </div> -->
             <div class="box-body">
-                <form method="POST">
+                <form method="POST" action="{{ route('update_tenant',['id'=>$tenant->tenant_id]) }}">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label>Titel</label>
@@ -24,8 +25,9 @@
                             <i class="glyphicon glyphicon-user"></i>
                             </div>
                             <select name="title" class="form-control">
-                                <option>Bapak</option>
-                                <option>Ibu</option>
+                                <option {{$tenant->title=='Bapak'?'selected':''}} >Bapak</option>
+                                <option {{$tenant->title=='Ibu'?'selected':''}} >Ibu</option>
+                                
                             </select>
                         </div>
                     </div>
@@ -36,7 +38,7 @@
                             <div class="input-group-addon">
                             <i class="glyphicon glyphicon-user"></i>
                             </div>
-                            <input type="text" name="first-name" value="{{ old('first-name') }}" class="form-control">
+                            <input type="text" name="first-name" value="{{ old('first-name')==NULL ? $tenant->first_name : old('first-name') }}" class="form-control">
                         </div>
                         @if ($errors->has('first-name'))
                             <span class="help-block">
@@ -50,7 +52,7 @@
                             <div class="input-group-addon">
                             <i class="glyphicon glyphicon-user"></i>
                             </div>
-                            <input type="text" name="last-name" value="{{ old('last-name') }}" class="form-control">
+                            <input type="text" name="last-name" value="{{ old('last-name')==NULL ? $tenant->last_name : old('last-name') }}" class="form-control">
                         </div>
                         @if ($errors->has('last-name'))
                             <span class="help-block">
@@ -64,7 +66,7 @@
                             <div class="input-group-addon">
                             <i class="	glyphicon glyphicon-envelope"></i>
                             </div>
-                            <input type="text" name="email" value="{{ old('email') }}" class="form-control">
+                            <input type="text" name="email" value="{{ old('email')==NULL ? $tenant->email : old('email') }}" class="form-control">
                         </div>
                         @if ($errors->has('email'))
                             <span class="help-block">
@@ -78,7 +80,7 @@
                             <div class="input-group-addon">
                             <i class="glyphicon glyphicon-phone"></i>
                             </div>
-                            <input type="text" name="mobile" value="{{ old('mobile') }}" class="form-control">
+                            <input type="text" name="mobile" value="{{ old('mobile')==NULL ? $tenant->mobile : old('mobile') }}" class="form-control">
                         </div>
                         @if ($errors->has('mobile'))
                             <span class="help-block">
@@ -92,7 +94,7 @@
                             <div class="input-group-addon">
                             <i class="glyphicon glyphicon-earphone"></i>
                             </div>
-                            <input type="text" name="phone" value="{{ old('phone') }}" class="form-control">
+                            <input type="text" name="phone" value="{{ old('phone')==NULL ? $tenant->phone : old('phone') }}" class="form-control">
                         </div>
                         @if ($errors->has('phone'))
                             <span class="help-block">
@@ -106,7 +108,7 @@
                             <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="date" name="dob" value="{{ old('dob') }}" class="form-control pull-right" id="datepicker">
+                            <input type="date" name="dob" value="{{ old('dob')==NULL ? $tenant->dob : old('dob') }}" class="form-control pull-right" id="datepicker">
                         </div>
                         @if ($errors->has('dob'))
                             <span class="help-block">
@@ -120,7 +122,7 @@
                             <div class="input-group-addon">
                             <i class="glyphicon glyphicon-info-sign"></i>
                             </div>
-                            <input type="text" name="id-number" value="{{ old('id-number') }}" class="form-control">
+                            <input type="text" name="id-number" value="{{ old('id-number')==NULL ? $tenant->id_number : old('id-number') }}" class="form-control">
                         </div>
                         @if ($errors->has('id-number'))
                             <span class="help-block">
@@ -134,7 +136,7 @@
                             <div class="input-group-addon">
                             <i class="glyphicon glyphicon-home"></i>
                             </div>
-                            <input type="text" name="address" value="{{ old('address') }}" class="form-control">
+                            <input type="text" name="address" value="{{ old('address')==NULL ? $tenant->address : old('address') }}" class="form-control">
                         </div>
                         @if ($errors->has('address'))
                             <span class="help-block">
@@ -148,12 +150,17 @@
                             <div class="input-group-addon">
                             <i class="glyphicon glyphicon-tag"></i>
                             </div>
-                            <input type="text" name="notes" class="form-control">
+                            <input type="text" name="notes" value="{{ old('notes')==NULL ? $tenant->notes : old('notes') }}" class="form-control">
                         </div>
                     </div>
                     <button type="submit" class="btn btn-block btn-primary btn-lg">Simpan</button>
-                </form>    
+                    <button type="button" onclick="event.preventDefault();
+                  document.getElementById('delete-tenant').submit();" class="btn btn-block btn-danger btn-lg">Delete</button>
+                </form> 
+                <form id="delete-tenant" method="POST" action="{{ route('delete_tenant',['id'=>$tenant->tenant_id])}}">
+                {{ csrf_field() }}
+                </form>
             </div>
         </div>
-</section>            
+</section>
 @endsection

@@ -359,7 +359,7 @@
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="{{ route('add_tenant') }}"><i class="fa fa-circle-o"></i>Tambah Baru </a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Lihat Daftar</a></li>
+            <li><a href="{{ route('show_tenant') }}"><i class="fa fa-circle-o"></i>Lihat Daftar</a></li>
           </ul>
         </li>
         <!-- End of Tenant -->
