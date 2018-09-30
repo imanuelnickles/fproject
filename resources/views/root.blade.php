@@ -337,14 +337,14 @@
         <!-- Property -->
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Property</span>
+            <i class="fa fa-dashboard"></i> <span>Properti</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+            <li class="active"><a href="{{ route('add_property') }}"><i class="fa fa-circle-o"></i> Tambah Baru</a></li>
+            <li><a href="{{ route('show_property') }}"><i class="fa fa-circle-o"></i> Lihat Daftar</a></li>
           </ul>
         </li>
         <!-- End of Property -->

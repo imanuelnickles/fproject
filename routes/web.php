@@ -31,4 +31,10 @@ Route::middleware(['auth', 'subscription'])->group(function(){
         Route::post('/edit/{id}','TenantController@update')->name('update_tenant');
         Route::post('/delete/{id}','TenantController@destroy')->name('delete_tenant');
     });
+
+    // Prefix property
+    Route::prefix('property')->group(function(){
+        Route::get('/','PropertyController@index')->name('show_property');
+        Route::get('/add','PropertyController@create')->name('add_property');
+    });
 });
