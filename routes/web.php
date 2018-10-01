@@ -21,9 +21,6 @@ Auth::routes();
 Route::middleware(['auth'])->group(function(){
     Route::get('/subscription','SubscriptionController@index')->name('interrupt_subscription');
 
-
-
-
     Route::middleware(['subscription'])->group(function(){
         // Dashboard
         Route::get('/home', 'HomeController@index')->name('home');
