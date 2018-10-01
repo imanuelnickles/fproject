@@ -31,9 +31,9 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
-  <div class="login-logo">
+  <!-- <div class="login-logo">
     <a href="#"><b>Admin</b>LTE</a>
-  </div>
+  </div> -->
   
   @yield('content')
 
