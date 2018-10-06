@@ -22,7 +22,7 @@
                 @endif
                 </td>
                 <td>
-                    <a class="badge bg-yellow" href="#">
+                    <a class="badge bg-yellow" href="{{ route('edit_property_expenses',['id'=>$property->property_id,'expenses_id'=>$o->outcome_id]) }}">
                         Lihat/Ubah
                     </a>
                 </td>
