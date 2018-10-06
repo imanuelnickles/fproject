@@ -10,8 +10,25 @@
       </ol>
 </section>
 <section class="content">
-    <div class="row">
-        
+  <div class="row">
+    @foreach($property as $t)
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+
+      <div class="small-box {{ $t->occupied=== 1 ? 'bg-red' : 'bg-green' }}">
+        <div class="inner">
+          <h4>{{$t->name}}</h4>
+          <p>Harga Sewa: Rp.{{$t->rent_price}},-</p>
+        </div>
+        <div class="icon">
+          <i class="fa fa-home"></i>
+        </div>
+        <a href="#" class="small-box-footer">
+          Lihat Detail Properti <i class="fa fa-arrow-circle-right"></i>
+        </a>
+      </div>
     </div>
+    @endforeach
+  </div>
 </section>
 @endsection

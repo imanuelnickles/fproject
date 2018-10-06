@@ -16,7 +16,7 @@
         {{ csrf_field() }}
         <div class="row">
           <div class="col-md-6">
-            <div class="form-group">
+            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }} has-feedback ">
               <label>Nama</label>
               <div class="input-group">
                   <div class="input-group-addon">
@@ -37,7 +37,7 @@
                     <div class="input-group-addon">
                       <i class="glyphicon glyphicon-flag"></i>
                     </div>
-                    <input type="text" name="negara" value="{{ old('negara') }}" class="form-control">
+                    <input type="text" name="country" value="{{ old('country') }}" class="form-control">
                 </div>
               </div>
             </div>
@@ -49,20 +49,25 @@
                     <div class="input-group-addon">
                       <i class="glyphicon glyphicon-home"></i>
                     </div>
-                    <input type="text" name="kota" value="{{ old('kota') }}" class="form-control">
+                    <input type="text" name="city" value="{{ old('city') }}" class="form-control">
                 </div>
               </div>
             </div>
           </div>
           <div class="col-md-6">
-            <div class="form-group">
+            <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }} has-feedback">
               <label>Alamat</label>
               <div class="input-group">
                   <div class="input-group-addon">
                     <i class="glyphicon glyphicon-road"></i>
                   </div>
-                  <textarea class="form-control" rows="5" id="Address"></textarea>
+                  <textarea class="form-control" rows="5" id="address" name="address" value="{{old('address')}}"></textarea>
               </div>
+              @if ($errors->has('address'))
+              <span class="help-block">
+                  <strong>{{ $errors->first('address') }}</strong>
+              </span>
+              @endif
             </div>
           </div>
         </div>
@@ -74,7 +79,7 @@
                   <div class="input-group-addon">
                     <i class="glyphicon glyphicon-search"></i>
                   </div>
-                  <input type="text" name="kodePos" value="{{ old('kodePos') }}" class="form-control">
+                  <input type="text" name="post_code" value="{{ old('post_code') }}" class="form-control">
               </div>
             </div>
           </div>
@@ -85,30 +90,40 @@
                   <div class="input-group-addon">
                     <i class="glyphicon glyphicon-tag"></i>
                   </div>
-                  <input type="text" name="tipeProperti" value="{{ old('tipeProperti') }}" class="form-control">
+                  <input type="text" name="property_type" value="{{ old('property_type') }}" class="form-control">
               </div>
             </div>
           </div>
           <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group{{ $errors->has('total_floor') ? ' has-error' : '' }} has-feedback">
               <label>Jumlah Lantai</label>
               <div class="input-group">
                   <div class="input-group-addon">
                     <i class="glyphicon glyphicon-plus"></i>
                   </div>
-                  <input type="text" name="jumlahLantai" value="{{ old('jumlahLantai') }}" class="form-control">
+                  <input type="number" name="total_floor" value="{{ old('total_floor') }}" class="form-control">
               </div>
+              @if ($errors->has('total_floor'))
+              <span class="help-block">
+                  <strong>{{ $errors->first('total_floor') }}</strong>
+              </span>
+              @endif
             </div>
           </div>
           <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group{{ $errors->has('total_bedrooms') ? ' has-error' : '' }} has-feedback">
               <label>Jumlah Kamar</label>
               <div class="input-group">
                   <div class="input-group-addon">
                     <i class="glyphicon glyphicon-plus"></i>
                   </div>
-                  <input type="text" name="jumlahKamar" value="{{ old('jumlahKamar') }}" class="form-control">
+                  <input type="number" name="total_bedrooms" value="{{ old('total_bedrooms') }}" class="form-control">
               </div>
+              @if ($errors->has('total_bedrooms'))
+              <span class="help-block">
+                  <strong>{{ $errors->first('total_bedrooms') }}</strong>
+              </span>
+              @endif
             </div>
           </div>
         </div>
@@ -121,7 +136,7 @@
                   <div class="input-group-addon">
                     <i class="glyphicon glyphicon-resize-full"></i>
                   </div>
-                  <input type="text" name="luasBangunan" value="{{ old('luasBangunan') }}" class="form-control">
+                  <input type="text" name="building_area" value="{{ old('building_area') }}" class="form-control">
               </div>
             </div>
           </div>
@@ -132,30 +147,40 @@
                   <div class="input-group-addon">
                     <i class="glyphicon glyphicon-resize-full"></i>
                   </div>
-                  <input type="text" name="luasTanah" value="{{ old('luasTanah') }}" class="form-control">
+                  <input type="text" name="surface_area" value="{{ old('surface_area') }}" class="form-control">
               </div>
             </div>
           </div>
           <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group{{ $errors->has('purchase_date') ? ' has-error' : '' }} has-feedback">
               <label>Tanggal Pembelian</label>
               <div class="input-group date">
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                 </div>
-                <input type="date" name="tanggalPembelian" value="{{ old('tanggalPembelian') }}" class="form-control pull-right" id="datepicker">
+                <input type="date" name="purchase_date" value="{{ old('purchase_date') }}" class="form-control pull-right" id="datepicker">
               </div>
+              @if ($errors->has('purchase_date'))
+              <span class="help-block">
+                  <strong>{{ $errors->first('purchase_date') }}</strong>
+              </span>
+              @endif
             </div>
           </div>
           <div class="col-md-3">
-            <div class="form-group">
+            <div class="form-group{{ $errors->has('purchase_price') ? ' has-error' : '' }} has-feedback">
               <label>Harga Beli</label>
               <div class="input-group">
                   <div class="input-group-addon">
                     <i class="glyphicon glyphicon-usd"></i>
                   </div>
-                  <input type="text" name="hargaBeli" value="{{ old('hargaBeli') }}" class="form-control">
+                  <input type="text" name="purchase_price" value="{{ old('purchase_price') }}" class="form-control">
               </div>
+              @if ($errors->has('purchase_price'))
+              <span class="help-block">
+                  <strong>{{ $errors->first('purchase_price') }}</strong>
+              </span>
+              @endif
             </div>
           </div>
         </div>
@@ -168,45 +193,55 @@
                   <div class="input-group-addon">
                     <i class="glyphicon glyphicon-thumbs-up"></i>
                   </div>
-                  <textarea class="form-control" rows="5" id="Fasilitas"></textarea>
+                  <textarea class="form-control" rows="5" id="notes" name="notes" value="{{ old('notes') }}"></textarea>
               </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="col-md-6" style="padding-left: 0 !important;">
-              <div class="form-group">
+              <div class="form-group{{ $errors->has('tax') ? ' has-error' : '' }} has-feedback">
                 <label>PBB</label>
                 <div class="input-group">
                     <div class="input-group-addon">
                       <i class="glyphicon glyphicon-usd"></i>
                     </div>
-                    <input type="text" name="PBB" value="{{ old('PBB') }}" class="form-control">
+                    <input type="text" name="tax" value="{{ old('tax') }}" class="form-control">
                 </div>
+                @if ($errors->has('tax'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('tax') }}</strong>
+                </span>
+                @endif
               </div>
             </div>
             
             <div class="col-md-6" style="padding-right: 0 !important;">
-              <div class="form-group">
+              <div class="form-group{{ $errors->has('valuation') ? ' has-error' : '' }} has-feedback">
                 <label>Valuasi Sekarang</label>
                 <div class="input-group">
                     <div class="input-group-addon">
                       <i class="glyphicon glyphicon-usd"></i>
                     </div>
-                    <input type="text" name="valuasi" value="{{ old('valuasi') }}" class="form-control">
+                    <input type="text" name="valuation" value="{{ old('valuation') }}" class="form-control">
                 </div>
+                @if ($errors->has('valuation'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('valuation') }}</strong>
+                </span>
+                @endif
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group{{ $errors->has('rent_price') ? ' has-error' : '' }} has-feedback">
               <label>Harga Sewa</label>
               <div class="input-group">
                   <div class="input-group-addon">
                     <i class="glyphicon glyphicon-usd"></i>
                   </div>
-                  <input type="text" name="hargaSewa" value="{{ old('hargaSewa') }}" class="form-control">
+                  <input type="text" name="rent_price" value="{{ old('rent_price') }}" class="form-control">
               </div>
-              @if ($errors->has('name'))
+              @if ($errors->has('rent_price'))
               <span class="help-block">
-                  <strong>{{ $errors->first('name') }}</strong>
+                  <strong>{{ $errors->first('rent_price') }}</strong>
               </span>
               @endif
             </div>

@@ -126,6 +126,14 @@ return [
         'id-number'=>'No. KTP',
         'address'=>'Alamat',
         'notes'=>'Notes',
+        'name'=>'Nama',
+        'address'=>'Alamat',
+        'purchase_price'=>'Harga beli',
+        'rent_price'=>'Harga sewa',
+        'tax'=>'PBB',
+        'total_floor'=>'Jumlah lantai',
+        'total_bedrooms'=>'Jumlah kamar',
+        'valuation'=>'Valuasi'
     ],
 
 ];
