@@ -41,6 +41,8 @@ Route::middleware(['auth'])->group(function(){
             Route::get('/add','PropertyController@create')->name('add_property');
             Route::post('/add','PropertyController@store')->name('save_new_property');
             Route::get('/{id}','PropertyController@show')->name('show_detail_property');
+            Route::get('/edit/{id}','PropertyController@edit')->name('edit_property');
+            Route::post('/edit/{id}','PropertyController@update')->name('update_property');
         });
     });    
 });
