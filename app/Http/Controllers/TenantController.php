@@ -18,7 +18,7 @@ class TenantController extends Controller
     {
         // Find all related tenant
         $tenant = Tenant::where('user_id',Auth::id())->get();
-        return view('tenant.show_tenant',['tenant'=>$tenant]);
+        return view('tenant.show_tenant_data_tables',['tenant'=>$tenant]);
     }
 
     /**

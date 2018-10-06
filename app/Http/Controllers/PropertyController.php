@@ -67,7 +67,7 @@ class PropertyController extends Controller
             'tax'=>Input::get('tax'),
             'valuation'=>Input::get('valuation'),
             'rent_price'=>Input::get('rent_price'),
-            'occupied'=>0,
+            'occupied'=>Input::get('occupied'),
             'notes'=>Input::get('notes'),
         ]);
         return redirect()->route('add_property');
