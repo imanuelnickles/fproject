@@ -231,19 +231,40 @@
                 @endif
               </div>
             </div>
-            <div class="form-group{{ $errors->has('rent_price') ? ' has-error' : '' }} has-feedback">
-              <label>Harga Sewa</label>
-              <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="glyphicon glyphicon-usd"></i>
-                  </div>
-                  <input type="text" name="rent_price" value="{{ old('rent_price') }}" class="form-control">
+            <div class="col-md-6" style="padding-left: 0 !important;">
+              <div class="form-group{{ $errors->has('rent_price') ? ' has-error' : '' }} has-feedback">
+                <label>Harga Sewa</label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                      <i class="glyphicon glyphicon-usd"></i>
+                    </div>
+                    <input type="text" name="rent_price" value="{{ old('rent_price') }}" class="form-control">
+                </div>
+                @if ($errors->has('rent_price'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('rent_price') }}</strong>
+                </span>
+                @endif
               </div>
-              @if ($errors->has('rent_price'))
-              <span class="help-block">
-                  <strong>{{ $errors->first('rent_price') }}</strong>
-              </span>
-              @endif
+            </div>
+            <div class="col-md-6" style="padding-right: 0 !important;">
+              <div class="form-group">
+                <label>Status</label>
+                <div class="input-group">
+                    <div class="input-group-addon">
+                      <i class="glyphicon glyphicon-user"></i>
+                    </div>
+                    <select class="form-control" id="sel1" name="occupied">
+                      <option value="0">Kosong</option>
+                      <option value="1">Isi</option>
+                    </select>
+                </div>
+                @if ($errors->has('rent_price'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('rent_price') }}</strong>
+                </span>
+                @endif
+              </div>
             </div>
           </div>
         </div>
