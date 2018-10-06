@@ -31,7 +31,7 @@ class CreatePropertiesTable extends Migration
             $table->integer('tax')->unsigned();
             $table->integer('valuation')->unsigned();
             $table->bigInteger('rent_price')->unsigned();
-            $table->integer('occupied')->usigned()->default(0);
+            $table->integer('occupied')->unsigned()->default(0);
             $table->text('notes')->nullable();
             $table->softDeletes();
             $table->timestamps();
