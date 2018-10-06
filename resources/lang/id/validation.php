@@ -133,7 +133,8 @@ return [
         'tax'=>'PBB',
         'total_floor'=>'Jumlah lantai',
         'total_bedrooms'=>'Jumlah kamar',
-        'valuation'=>'Valuasi'
+        'valuation'=>'Valuasi',
+        'payment_date'=>'Jatuh tempo'
     ],
 
 ];
