@@ -43,6 +43,10 @@ Route::middleware(['auth'])->group(function(){
             Route::get('/{id}','PropertyController@show')->name('show_detail_property');
             Route::get('/edit/{id}','PropertyController@edit')->name('edit_property');
             Route::post('/edit/{id}','PropertyController@update')->name('update_property');
+
+            // Expenses
+            Route::get('/{id}/expenses/add','ExpensesController@index')->name('property_expenses');
+            Route::post('/{id}/expenses/add','ExpensesController@store')->name('add_property_expenses');
         });
     });    
 });

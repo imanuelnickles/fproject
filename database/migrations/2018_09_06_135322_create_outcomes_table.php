@@ -16,8 +16,12 @@ class CreateOutcomesTable extends Migration
         Schema::create('outcomes', function (Blueprint $table) {
             $table->increments('outcome_id');
             $table->integer('property_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->string('name');
             $table->date('payment_date');
             $table->integer('amount')->unsigned();
+            $table->integer('status')->unsigned()->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
