@@ -41,6 +41,10 @@ Route::middleware(['auth'])->group(function(){
             Route::get('/add','PropertyController@create')->name('add_property');
             Route::post('/add','PropertyController@store')->name('save_new_property');
             Route::get('/{id}','PropertyController@show')->name('show_detail_property');
+
+            // Expenses
+            Route::get('/{id}/expenses/add','ExpensesController@index')->name('property_expenses');
+            Route::post('/{id}/expenses/add','ExpensesController@store')->name('add_property_expenses');
         });
     });    
 });

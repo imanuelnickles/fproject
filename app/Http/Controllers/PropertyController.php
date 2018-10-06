@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\Property;
+use App\Outcome;
 
 class PropertyController extends Controller
 {
@@ -82,7 +83,10 @@ class PropertyController extends Controller
     public function show($id)
     {
         $property=Property::findOrFail($id);
-        return view('property.show_detail',['property'=>$property]);
+        $outcome = Outcome::where('user_id',Auth::id())
+                    ->where('property_id',$property->property_id)
+                    ->get();
+        return view('property.show_detail',['property'=>$property,'outcome'=>$outcome]);
     }
 
     /**

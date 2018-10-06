@@ -65,7 +65,7 @@ class TenantController extends Controller
             'address'=>Input::get('address'),
             'notes'=>Input::get('notes')
         ]);
-        return redirect()->route('add_tenant');
+        return redirect()->route('show_tenant');
     }
 
     /**
