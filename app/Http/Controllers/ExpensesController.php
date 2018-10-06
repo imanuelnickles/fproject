@@ -109,9 +109,18 @@ class ExpensesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($property_id,$expenses_id)
     {
-        //
+        $p = Property::where('user_id',Auth::id())
+                    ->where('property_id',$property_id)
+                    ->get()->first();
+
+        $o = Outcome::where('user_id',Auth::id())
+                    ->where('property_id',$property_id)
+                    ->where('outcome_id',$expenses_id)
+                    ->get()->first();
+
+        return view('property.expenses.edit_expenses',['property'=>$p,'outcome'=>$o]);
     }
 
     /**
@@ -121,9 +130,28 @@ class ExpensesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id,$expenses_id)
     {
-        //
+        $this->validate($request,[
+            'name'=>'required',
+            'amount'=>'required|numeric',
+            'payment_date'=>'required',
+            'status'=>'required|numeric',
+        ]);
+
+        Outcome::where('outcome_id',$expenses_id)
+                ->where('user_id',Auth::id())
+                ->where('property_id',$id)->update([
+                    'name'=>Input::get('name'),
+                    'payment_date'=>Input::get('payment_date'),
+                    'amount'=>Input::get('amount'),
+                    'status'=>Input::get('status')
+                ]);
+        /* returning back to property details 
+        using session to tell JS to open tab*/
+        return redirect()
+        ->route('show_detail_property',['id'=>$id])
+        ->with('open_tab','pengeluaran');
     }
 
     /**
@@ -132,8 +160,13 @@ class ExpensesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,$expenses_id)
     {
-        //
+        Outcome::destroy($expenses_id);
+        /* returning back to property details 
+        using session to tell JS to open tab*/
+        return redirect()
+        ->route('show_detail_property',['id'=>$id])
+        ->with('open_tab','pengeluaran');
     }
 }

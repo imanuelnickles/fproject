@@ -47,6 +47,9 @@ Route::middleware(['auth'])->group(function(){
             // Expenses
             Route::get('/{id}/expenses/add','ExpensesController@index')->name('property_expenses');
             Route::post('/{id}/expenses/add','ExpensesController@store')->name('add_property_expenses');
+            Route::get('/{id}/expenses/{expenses_id}/edit','ExpensesController@edit')->name('edit_property_expenses');
+            Route::post('/{id}/expenses/{expenses_id}/edit','ExpensesController@update')->name('update_property_expenses');
+            Route::post('/{id}/expenses/{expenses_id}/edit','ExpensesController@destroy')->name('delete_property_expenses');
         });
     });    
 });
