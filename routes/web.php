@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function(){
             Route::get('/','PropertyController@index')->name('show_property');
             Route::get('/add','PropertyController@create')->name('add_property');
             Route::post('/add','PropertyController@store')->name('save_new_property');
+            Route::get('/{id}','PropertyController@show')->name('show_detail_property');
         });
     });    
 });

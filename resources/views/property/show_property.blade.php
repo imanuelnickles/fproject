@@ -23,7 +23,7 @@
         <div class="icon">
           <i class="fa fa-home"></i>
         </div>
-        <a href="#" class="small-box-footer">
+        <a href="{{route('show_detail_property',['id'=>$t->property_id])}}" class="small-box-footer">
           Lihat Detail Properti <i class="fa fa-arrow-circle-right"></i>
         </a>
       </div>
