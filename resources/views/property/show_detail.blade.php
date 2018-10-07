@@ -238,7 +238,14 @@
               <!-- /.tab-pane -->
 
               <div class="tab-pane" id="tab_2">
-                Daftar Kontrak
+                <div class="row">
+                  <div class="col-md-10"></div>
+                  <div class="col-md-2">
+                    <a href="{{ route('add_contract',['id'=>$property->property_id]) }}" class="small-box-footer">
+                      <button type="button" class="btn btn-block btn-primary">Tambah Kontrak</button>
+                    </a>
+                  </div>
+                </div>
               </div>
 
               <!-- /.tab-pane -->

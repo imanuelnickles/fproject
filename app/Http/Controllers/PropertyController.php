@@ -82,7 +82,14 @@ class PropertyController extends Controller
      */
     public function show($id)
     {
-        $property=Property::findOrFail($id);
+        $property=Property::where('property_id',$id)
+                    ->where('user_id',Auth::id())
+                    ->get()
+                    ->first();
+        
+        if($property==null){
+            return redirect()->route('show_property');
+        }
         $outcome = Outcome::where('user_id',Auth::id())
                     ->where('property_id',$property->property_id)
                     ->get();
