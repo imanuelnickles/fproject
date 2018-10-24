@@ -16,7 +16,6 @@ class CreatePaymentTermsTable extends Migration
         Schema::create('payment_terms', function (Blueprint $table) {
             $table->increments('payment_term_id');
             $table->integer('contract_id')->unsigned();
-            $table->integer('index')->unsigned();
             $table->date('deadline');
             $table->date('payment_date')->nullable();
 

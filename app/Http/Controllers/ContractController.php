@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\Property;
 use App\Contract;
+use App\PaymentTerm;
 use App\Tenant;
 
 class ContractController extends Controller
@@ -60,7 +61,38 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $validation = $this->validate($request,[
+            'property_id'=>'required',
+            'tenant_id'=>'required',
+            'start_date'=>'required',
+            'end_date'=>'required',
+            'contract_date'=>'required',
+            'amount.*'=> "required",
+            'deadline.*'=> "required|date|distinct",
+        ]);
+        
+        $contract = Contract::create([
+            'property_id'=>Input::get('property_id'),
+            'tenant_id'=>Input::get('tenant_id'),
+            'start_date'=>Input::get('start_date'),
+            'end_date'=>Input::get('end_date'),
+            'contract_date'=>Input::get('contract_date'),
+        ]);
+        
+        $amounts = Input::get('amount.*');
+        $deadlines = Input::get('deadline.*');
+        
+        for ($i= 0; $i<count($amounts);$i++) {
+            PaymentTerm::create([
+                'contract_id'=>$contract->contract_id,
+                'amount'=>$amounts[$i],
+                'deadline'=>$deadlines[$i],
+                'payment_date'=>null
+            ]);
+        }
+
+        return redirect()->route('show_detail_property', ['id' => Input::get('property_id')]);
     }
 
     /**
