@@ -27,4 +27,8 @@ class Contract extends Model
     public function paymentTerm(){
         return $this->hasMany('App\PaymentTerm','contract_id');
     }
+
+    public function tenant(){
+        return $this->belongsTo('App\Tenant','tenant_id');
+    }
 }

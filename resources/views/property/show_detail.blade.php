@@ -246,6 +246,12 @@
                     </a>
                   </div>
                 </div>
+                <br>
+                <div class="row">
+                  <div class="col-md-12">
+                  @include('contract.contracts')
+                  </div>
+                </div>
               </div>
 
               <!-- /.tab-pane -->

@@ -19,7 +19,7 @@ class CreatePaymentTermsTable extends Migration
             $table->date('deadline');
             $table->integer('amount');
             $table->date('payment_date')->nullable();
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }
