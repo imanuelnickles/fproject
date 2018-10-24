@@ -104,43 +104,23 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <li><a href="{{ route('home') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-        @if(Auth::user()->role == 2)
-          <li><a href="{{ route('admin_user') }}"><i class="fa fa-dashboard"></i> <span>Dashboard Admin</span></a></li>
-        @endif
-        <!-- Property -->
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Properti</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li class="active"><a href="{{ route('add_property') }}"><i class="fa fa-circle-o"></i> Tambah Baru</a></li>
-            <li><a href="{{ route('show_property') }}"><i class="fa fa-circle-o"></i> Lihat Daftar</a></li>
-          </ul>
-        </li>
-        <!-- End of Property -->
 
         <!-- Tenant -->
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Penyewa</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
+        <li>
+          <a href="{{ route('admin_user') }}">
+            <i class="fa fa-dashboard"></i> <span>User</span>
           </a>
-          <ul class="treeview-menu">
+          <!-- <ul class="treeview-menu">
             <li class="active"><a href="{{ route('add_tenant') }}"><i class="fa fa-circle-o"></i>Tambah Baru </a></li>
             <li><a href="{{ route('show_tenant') }}"><i class="fa fa-circle-o"></i>Lihat Daftar</a></li>
-          </ul>
+          </ul> -->
         </li>
         <!-- End of Tenant -->
-        <li class="header">REPORTING</li>
+        <!-- <li class="header">REPORTING</li>
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
-        
+         -->
       </ul>
     </section>
     <!-- /.sidebar -->

@@ -18,13 +18,21 @@ Route::get('/', function () {
 Auth::routes();
 
 // Middleware
-Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth','notBlocked'])->group(function(){
     Route::get('/subscription','SubscriptionController@index')->name('interrupt_subscription');
+
+    Route::middleware(['admin'])->prefix('admin')->group(function(){
+        Route::get('/dashboard', 'AdminController@index')->name('admin_dashboard');
+        Route::get('/user', 'AdminController@user')->name('admin_user');
+        Route::get('/user/{id}', 'AdminController@userDetail')->name('admin_user_detail');
+        Route::post('/user/{id}', 'AdminController@userUpdate')->name('admin_user_update');
+        Route::post('/user/{id}/ban','AdminController@userBan')->name('admin_user_ban');
+    });
 
     Route::middleware(['subscription'])->group(function(){
         // Dashboard
         Route::get('/home', 'HomeController@index')->name('home');
-
+        Route::post('/home','HomeController@show')->name('specific_dashboard');
         // Prefix tenant
         Route::prefix('tenant')->group(function(){
             Route::get('/add','TenantController@create')->name('add_tenant');
