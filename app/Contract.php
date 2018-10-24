@@ -23,4 +23,8 @@ class Contract extends Model
 
     // Soft Deletes Field
     protected $dates = ['deleted_at'];
+
+    public function paymentTerm(){
+        return $this->hasMany('App\PaymentTerm','contract_id');
+    }
 }

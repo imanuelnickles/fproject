@@ -19,4 +19,12 @@ class Property extends Model
 
     // Soft Deletes Field
     protected $dates = ['deleted_at'];
+
+    public function expenses(){
+        return $this->hasMany('App\Outcome','property_id');
+    }
+
+    public function contracts(){
+        return $this->hasMany('App\Contract','property_id');
+    }
 }

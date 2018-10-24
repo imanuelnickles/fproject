@@ -20,7 +20,7 @@ class CheckSubscription
     {
         if (!env('BYPASS_SUBSCRIPTION')){
             $subscription = Subscription::where('user_id',Auth::id())
-                            ->where('end_date','>=',date('Y:m:d'))
+                            ->where('end_date','<=',date('Y:m:d'))
                             ->first();
             
             if ($subscription == NULL){

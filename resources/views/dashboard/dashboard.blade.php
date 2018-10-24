@@ -15,6 +15,25 @@
 
     <!-- Main content -->
     <section class="content">
+      <div class="row">
+        <div class="col-lg-6 col-xs-6">
+          <form method="POST" id="dashboard-filter">
+            {{ csrf_field() }}
+            <div class="form-group">
+              <label>Filter</label>
+              <select name="filter" onchange="event.preventDefault();
+                  document.getElementById('dashboard-filter').submit();">
+                <option value="0">Semua</option>
+                @if($property != null)
+                  @foreach($property as $p)
+                    <option {{ $p->property_id==$active?'selected':'' }} value="{{$p->property_id}}">{{$p->name}}</option>
+                  @endforeach
+                @endif
+              </select>
+            </div>
+          <form>
+          </div>
+      </div>
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-lg-3 col-xs-6">
@@ -102,6 +121,7 @@
               </div>
           </div> -->
           <!-- Donut chart -->
+          @if($active==0)
           <div class="box box-primary">
             <div class="box-header with-border">
               <i class="fa fa-bar-chart-o"></i>
@@ -118,6 +138,7 @@
               <div id="donut-chart" style="height: 300px;"></div>
             </div>
           </div>
+          @endif
         </div>
       </div>
       <div class="row">
@@ -155,6 +176,42 @@
 <!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->
 <script src="{{ asset('plugin/bower_components/Flot/jquery.flot.categories.js') }}"></script>
 
+<script>
+  var areaChartData = {
+        labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        
+        datasets: [
+          {
+            label               : 'Pemasukan',
+            fillColor           : 'rgba(210, 214, 222, 1)',
+            strokeColor         : 'rgba(210, 214, 222, 1)',
+            pointColor          : 'rgba(210, 214, 222, 1)',
+            pointStrokeColor    : '#c1c7d1',
+            pointHighlightFill  : '#fff',
+            pointHighlightStroke: 'rgba(220,220,220,1)',
+            data                : []
+          },
+          {
+            label               : 'Pengeluaran',
+            fillColor           : 'rgba(60,141,188,0.9)',
+            strokeColor         : 'rgba(60,141,188,0.8)',
+            pointColor          : '#3b8bba',
+            pointStrokeColor    : 'rgba(60,141,188,1)',
+            pointHighlightFill  : '#fff',
+            pointHighlightStroke: 'rgba(60,141,188,1)',
+            data                : [28, 48, 40, 19, 86, 27, 90]
+          }
+        ]
+  }
+</script>
 <script src="{{ asset('js/dashboard/dashboard.bar-chart.js') }}"></script>
-<script src="{{ asset('js/dashboard/dashboard.donut-chart.js') }}"></script>
+@if($active==0)
+  <script>
+    var donutData = [
+            { label: 'Terhuni', data: {{$occupied}}, color: '#3c8dbc' },
+            { label: 'Kosong', data: {{$total_property-$occupied}}, color: '#0073b7' }
+          ];
+  </script>
+  <script src="{{ asset('js/dashboard/dashboard.donut-chart.js') }}"></script>
+@endif
 @endsection

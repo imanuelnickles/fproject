@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','role'
+        'name', 'email', 'password','role','blocked_on'
     ];
 
     /**
@@ -30,4 +31,18 @@ class User extends Authenticatable
 
     // Soft Deletes Field
     protected $dates = ['deleted_at'];
+    
+    public function isBlocked()
+    {
+        if ( $this->blocked_on && Carbon::now() >= $this->blocked_on ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function subscription()
+    {
+        return $this->hasOne('App\Subscription');
+    }
 }
