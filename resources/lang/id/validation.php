@@ -134,7 +134,8 @@ return [
         'total_floor'=>'Jumlah lantai',
         'total_bedrooms'=>'Jumlah kamar',
         'valuation'=>'Valuasi',
-        'payment_date'=>'Jatuh tempo'
+        'payment_date'=>'Jatuh tempo',
+        'amount.*'=>'Jumlah pembayaran'
     ],
 
 ];

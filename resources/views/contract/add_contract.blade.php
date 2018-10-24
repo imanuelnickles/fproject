@@ -18,6 +18,7 @@
         <div class="box-body control">
             <div class="controls"> 
             <form method="POST">
+                <input type="text" name="property_id" value="{{$property_id}}" hidden>
                 {{ csrf_field() }}
                 <div class="form-group" id="form-html">
                     <label>Nama Properti</label>
@@ -25,13 +26,13 @@
                         <h4>{{ $property->name }}</h4>
                     </div>
                 </div>
-                <div class="form-group{{ $errors->has('penyewa') ? ' has-error' : '' }} has-feedback ">
+                <div class="form-group{{ $errors->has('tenant_id') ? ' has-error' : '' }} has-feedback ">
                   <label>Penyewa</label>
                   <div class="input-group">
                     <div class="input-group-addon">
                       <i class="glyphicon glyphicon-user"></i>
                     </div>
-                    <select class="form-control select2" style="width: 100%; height: 34px;">
+                    <select class="form-control select2" style="width: 100%; height: 34px;" name="tenant_id">
                       @foreach($tenant as $t)
                         <option value="{{$t->tenant_id}}">{{$t->first_name}} {{$t->last_name}}</option>
                       @endforeach
@@ -96,15 +97,20 @@
                     @endif
                 </div>
                 <hr>
+                @if ($errors->has('amount.*'))
+                <span class="help-block" style="color:red;">
+                    <strong>{{ $errors->first('amount.*') }}</strong>
+                </span>
+                @endif
                 <div class="form-group">
                     <div class="entry input-group col-sm-12">
                         <div class="col-sm-6" style="padding-left:0;">
                             <label> Pembayaran </label>
-                            <input class="form-control" name="pembayaran[]" type="text" placeholder="Pembayaran" />
+                            <input class="form-control" name="amount[]" type="number" placeholder="Pembayaran" />
                         </div>
                         <div class="col-sm-5">
                             <label> Jatuh Tempo </label>
-                            <input type="date" name="jatuhTempo[]" value="" class="form-control pull-right" id="datepicker">
+                            <input type="date" name="deadline[]" value="" class="form-control pull-right" id="datepicker">
                         </div>
                         <div class="col-sm-1">
                             <button class="btn btn-success btn-add" type="button" style="margin-top:25px;">
