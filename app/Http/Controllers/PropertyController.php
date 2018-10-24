@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\Property;
+use App\Outcome;
 
 class PropertyController extends Controller
 {
@@ -68,9 +69,9 @@ class PropertyController extends Controller
             'valuation'=>Input::get('valuation'),
             'rent_price'=>Input::get('rent_price'),
             'occupied'=>Input::get('occupied'),
-            'notes'=>Input::get('notes'),
+            'notes'=>Input::get('notes')
         ]);
-        return redirect()->route('add_property');
+        return redirect()->route('show_property');
     }
 
     /**
@@ -81,8 +82,18 @@ class PropertyController extends Controller
      */
     public function show($id)
     {
-        $property=Property::findOrFail($id);
-        return view('property.show_detail',['property'=>$property]);
+        $property=Property::where('property_id',$id)
+                    ->where('user_id',Auth::id())
+                    ->get()
+                    ->first();
+        
+        if($property==null){
+            return redirect()->route('show_property');
+        }
+        $outcome = Outcome::where('user_id',Auth::id())
+                    ->where('property_id',$property->property_id)
+                    ->get();
+        return view('property.show_detail',['property'=>$property,'outcome'=>$outcome]);
     }
 
     /**
@@ -93,7 +104,8 @@ class PropertyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $property=Property::findOrFail($id);
+        return view('property.edit_property',['property'=>$property]);
     }
 
     /**
@@ -105,7 +117,38 @@ class PropertyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name'=>'required',
+            'address'=>'required',
+            'total_floor'=>'required|numeric',
+            'total_bedrooms'=>'required|numeric',
+            'tax'=>'required|numeric',
+            'purchase_date'=>'required',
+            'valuation'=>'required|numeric',
+            'purchase_price'=>'required|numeric',
+            'rent_price'=>'required|numeric',
+        ]);
+
+        Property::where('property_id',$id)->update([
+            'name'=>Input::get('name'),
+            'address'=>Input::get('address'),
+            'country'=>Input::get('country'),
+            'city'=>Input::get('city'),
+            'post_code'=>Input::get('post_code'),
+            'property_type'=>Input::get('property_type'),
+            'total_floor'=>Input::get('total_floor'),
+            'total_bedrooms'=>Input::get('total_bedrooms'),
+            'building_area'=>Input::get('building_area'),
+            'surface_area'=>Input::get('surface_area'),
+            'purchase_date'=>Input::get('purchase_date'),
+            'purchase_price'=>Input::get('purchase_price'),
+            'tax'=>Input::get('tax'),
+            'valuation'=>Input::get('valuation'),
+            'rent_price'=>Input::get('rent_price'),
+            'occupied'=>Input::get('occupied'),
+            'notes'=>Input::get('notes')
+        ]);
+        return redirect()->route('show_detail_property', ['id' => $id]);
     }
 
     /**

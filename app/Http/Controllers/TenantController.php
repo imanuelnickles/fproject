@@ -65,7 +65,7 @@ class TenantController extends Controller
             'address'=>Input::get('address'),
             'notes'=>Input::get('notes')
         ]);
-        return redirect()->route('add_tenant');
+        return redirect()->route('show_tenant');
     }
 
     /**
@@ -76,7 +76,14 @@ class TenantController extends Controller
      */
     public function show($id)
     {
-        $tenant=Tenant::findOrFail($id);
+        $tenant=Tenant::where('tenant_id',$id)
+                    ->where('user_id',Auth::id())
+                    ->get()
+                    ->first();
+        
+        if($tenant==null){
+            return redirect()->route('show_tenant');
+        }
         return view('tenant.show_detail',['tenant'=>$tenant]);
     }
 
@@ -113,7 +120,14 @@ class TenantController extends Controller
             'notes'=>'max:144'
         ]);
 
-        Tenant::where('tenant_id',$id)->update([
+        $t = Tenant::where('tenant_id',$id)
+            ->where('user_id',Auth::id());
+        
+        if($t==null){
+            return back();
+        }
+
+        $t->update([
             'title'=>Input::get('title'),
             'first_name'=>Input::get('first-name'),
             'last_name'=>Input::get('last-name'),
