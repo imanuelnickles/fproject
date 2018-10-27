@@ -9,6 +9,7 @@ use App\Property;
 use App\Outcome;
 use App\Contract;
 use App\PaymentTerm;
+use App\Payment;
 use App\Tenant;
 
 class PropertyController extends Controller
@@ -103,14 +104,18 @@ class PropertyController extends Controller
                     ->where('property_id',$property->property_id)
                     ->get();
                     
-        $payments = PaymentTerm::with(['contract'=>function($query) use ($id){
-            return $query->where('property_id',$id)
-            ->with(['tenant'=>function($query1) {
-                return $query1;
+
+        $payments =Payment::with(['paymentTerm'=>function($query) use ($id){
+            return $query
+            ->with(['contract'=>function($query1) use ($id){
+                return $query1->where('property_id',$id)
+                ->with(['tenant'=>function($query2) {
+                    return $query2;
+                }]);
             }]);
         }])->get();
             
-        return view('property.show_detail',['property'=>$property,'outcome'=>$outcome,'contracts'=>$contracts, 'paymentTerms'=>$payments]);
+        return view('property.show_detail',['property'=>$property,'outcome'=>$outcome,'contracts'=>$contracts, 'payments'=>$payments]);
     }
 
     /**

@@ -23,10 +23,10 @@
             <div class="tab-content">
               <div class="tab-pane active" id="tab_1">
                 <div class="row">
-                  <div class="col-md-10"></div>
+                  
                   <div class="col-md-2">
                     <a href="{{route('edit_property',['id'=>$property->property_id])}}" class="small-box-footer">
-                      <button type="button" class="btn btn-block btn-primary">Ubah Data Properti</button>
+                      <button type="button" class="btn btn-block btn-primary btn-sm">Ubah Data Properti</button>
                     </a>
                   </div>
                 </div>
@@ -239,10 +239,10 @@
 
               <div class="tab-pane" id="tab_2">
                 <div class="row">
-                  <div class="col-md-10"></div>
+                  
                   <div class="col-md-2">
                     <a href="{{ route('add_contract',['id'=>$property->property_id]) }}" class="small-box-footer">
-                      <button type="button" class="btn btn-block btn-primary">Tambah Kontrak</button>
+                      <button type="button" class="btn btn-block btn-primary btn-sm">Tambah Kontrak</button>
                     </a>
                   </div>
                 </div>
@@ -262,7 +262,6 @@
                   </div>
                 </div>
               </div>
-
               <!-- /.tab-pane -->
               <div class="tab-pane" id="pengeluaran">
                 <div class="row">

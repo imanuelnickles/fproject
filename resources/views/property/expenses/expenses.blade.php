@@ -1,4 +1,4 @@
-<table id="dataTable" class="table table-striped table-bordered" style="width:100%">
+<table id="dataTable3" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
                 <th>Nama Pengeluaran</th>
