@@ -40,9 +40,9 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>150</h3>
+              <h3>{{ $dashboard['count_upcoming_rent'] }}</h3>
               <p>Upcoming Rent</p>
-              <p>Rp. 1.000.000</p>
+              <p>Rp. {{ $dashboard['total_upcoming_rent'] }}</p>
             </div>
             <div class="icon">
               <i class="ion ion-home"></i>
@@ -56,12 +56,12 @@
           <div class="small-box bg-red">
             <div class="inner">
               <h3>
-              53
+              {{ $dashboard['count_overdue_rent'] }}
               <!-- <sup style="font-size: 20px">%</sup> -->
               </h3>
 
               <p>Overdue Rent</p>
-              <p>Rp. 1.000.000</p>
+              <p>Rp. {{ $dashboard['total_overdue_rent'] }}</p>
             </div>
             <div class="icon">
               <i class="ion ion-ios-calendar"></i>
@@ -74,10 +74,10 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>44</h3>
+              <h3>{{ $dashboard['count_upcoming_expenses'] }}</h3>
 
               <p>Upcoming Expenses</p>
-              <p>Rp. 1.000.000</p>
+              <p>Rp. {{ $dashboard['total_upcoming_expenses'] }}</p>
             </div>
             <div class="icon">
               <i class="ion ion-hammer"></i>
@@ -90,10 +90,10 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65</h3>
+              <h3>{{ $dashboard['count_overdue_expenses'] }}</h3>
 
               <p>Overdue Expense</p>
-              <p>Rp. 1.000.000</p>
+              <p>Rp. {{ $dashboard['total_overdue_expenses'] }}</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
@@ -178,7 +178,7 @@
 
 <script>
   var areaChartData = {
-        labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels  :  @json($dashboard['months']),
         
         datasets: [
           {
@@ -189,7 +189,7 @@
             pointStrokeColor    : '#c1c7d1',
             pointHighlightFill  : '#fff',
             pointHighlightStroke: 'rgba(220,220,220,1)',
-            data                : []
+            data                :  @json($dashboard['incomes'])
           },
           {
             label               : 'Pengeluaran',
@@ -199,7 +199,7 @@
             pointStrokeColor    : 'rgba(60,141,188,1)',
             pointHighlightFill  : '#fff',
             pointHighlightStroke: 'rgba(60,141,188,1)',
-            data                : [28, 48, 40, 19, 86, 27, 90]
+            data                :  @json($dashboard['outcomes'])
           }
         ]
   }

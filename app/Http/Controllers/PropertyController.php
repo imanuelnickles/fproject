@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\Property;
 use App\Outcome;
+use App\Contract;
+use App\PaymentTerm;
+use App\Tenant;
 
 class PropertyController extends Controller
 {
@@ -90,10 +93,24 @@ class PropertyController extends Controller
         if($property==null){
             return redirect()->route('show_property');
         }
+
+        $contracts = Contract::where('property_id',$id)
+                    ->with(['tenant'=>function($query){
+                        return $query;
+                    }])->get();
+
+        
         $outcome = Outcome::where('user_id',Auth::id())
                     ->where('property_id',$property->property_id)
                     ->get();
-        return view('property.show_detail',['property'=>$property,'outcome'=>$outcome]);
+        $payments = PaymentTerm::with(['contract'=>function($query) use ($id){
+            return $query->where('property_id',$id)
+            ->with(['tenant'=>function($query1) {
+                return $query1;
+            }]);
+        }])->get();
+            
+        return view('property.show_detail',['property'=>$property,'outcome'=>$outcome,'contracts'=>$contracts, 'paymentTerms'=>$payments]);
     }
 
     /**

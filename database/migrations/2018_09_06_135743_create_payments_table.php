@@ -20,6 +20,7 @@ class CreatePaymentsTable extends Migration
             $table->string('payment_type');
             $table->integer('amount')->unsigned();
             $table->date('payment_date');
+            $table->string('notes');
             $table->timestamps();
         });
     }
