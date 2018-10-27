@@ -99,10 +99,10 @@ class PropertyController extends Controller
                         return $query;
                     }])->get();
 
-        
         $outcome = Outcome::where('user_id',Auth::id())
                     ->where('property_id',$property->property_id)
                     ->get();
+                    
         $payments = PaymentTerm::with(['contract'=>function($query) use ($id){
             return $query->where('property_id',$id)
             ->with(['tenant'=>function($query1) {

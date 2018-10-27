@@ -63,6 +63,11 @@ Route::middleware(['auth','notBlocked'])->group(function(){
             Route::get('/{id}/contract/add','ContractController@create')->name('add_contract');
             Route::get('/{id}/contract/{contract_id}','ContractController@show')->name('show_contract');
             Route::post('/{id}/contract/add','ContractController@store')->name('save_contract');
+
+            // Payment
+            Route::get('/{id}/payment/{payment_term_id}/add','PaymentController@create')->name('add_payment');
+            Route::get('/{id}/payment/{payment_term_id}/{payment_id}','PaymentController@show')->name('show_payment');
+            Route::post('/{id}/payment/{payment_term_id}/add','PaymentController@store')->name('save_payment');
         });
     });    
 });
