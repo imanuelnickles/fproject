@@ -21,6 +21,7 @@ class CreatePaymentsTable extends Migration
             $table->integer('amount')->unsigned();
             $table->date('payment_date');
             $table->string('notes');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

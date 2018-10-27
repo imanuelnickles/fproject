@@ -121,8 +121,21 @@ class ContractController extends Controller
             return redirect()->route('show_property');
         }
 
-        // Validated show form
-        return view('contract.show_contract',['property'=>$p,'property_id'=>$property_id]);
+        
+        $contract = Contract::where('contract_id',$contract_id)
+                    ->with(['tenant'=>function($query){
+                        return $query;
+                    }])->first();
+        $payment_term = PaymentTerm::where('contract_id', $contract_id )
+                        ->with(['payment'=>function($query3){
+                            return $query3->where('deleted_at',null);
+                        }])
+                        ->get();
+
+        if ($contract->notes == "") {
+            $contract->notes = "-";
+        }
+        return view('contract.show_contract',['property'=>$p,'property_id'=>$property_id, 'contract'=>$contract, 'payment_term'=>$payment_term]);
     }
 
     /**
