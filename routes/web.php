@@ -61,6 +61,7 @@ Route::middleware(['auth','notBlocked'])->group(function(){
 
             // Contract
             Route::get('/{id}/contract/add','ContractController@create')->name('add_contract');
+            Route::get('/{id}/contract/{contract_id}','ContractController@show')->name('show_contract');
             Route::post('/{id}/contract/add','ContractController@store')->name('save_contract');
         });
     });    

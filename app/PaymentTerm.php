@@ -17,4 +17,8 @@ class PaymentTerm extends Model
 
     // Soft Deletes Field
     protected $dates = ['deleted_at'];
+
+    public function contract(){
+        return $this->belongsTo('App\Contract','contract_id');
+    }
 }

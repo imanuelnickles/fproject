@@ -256,7 +256,11 @@
 
               <!-- /.tab-pane -->
               <div class="tab-pane" id="tab_3">
-                Daftar Pemasukan
+                <div class="row">
+                  <div class="col-md-12">
+                  @include('.payment.payments')
+                  </div>
+                </div>
               </div>
 
               <!-- /.tab-pane -->

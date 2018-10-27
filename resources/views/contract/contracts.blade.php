@@ -16,8 +16,8 @@
                 <td>{{ $cn->end_date}}</td>
                 <td>{{ $cn->contract_date}}</td>
                 <td>
-                    <a class="badge bg-yellow" href="{{ route('edit_property_expenses',['id'=>$property->property_id,'expenses_id'=>$cn->contract_id]) }}">
-                        Lihat/Ubah
+                    <a class="badge bg-yellow" href="{{ route('show_contract',['id'=>$property->property_id,'contract_id'=>$cn->contract_id]) }}">
+                        Lihat/ Tambah Pembayaran
                     </a>
                 </td>
             </tr>

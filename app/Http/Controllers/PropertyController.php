@@ -103,9 +103,14 @@ class PropertyController extends Controller
         $outcome = Outcome::where('user_id',Auth::id())
                     ->where('property_id',$property->property_id)
                     ->get();
-
-        
-        return view('property.show_detail',['property'=>$property,'outcome'=>$outcome,'contracts'=>$contracts]);
+        $payments = PaymentTerm::with(['contract'=>function($query) use ($id){
+            return $query->where('property_id',$id)
+            ->with(['tenant'=>function($query1) {
+                return $query1;
+            }]);
+        }])->get();
+            
+        return view('property.show_detail',['property'=>$property,'outcome'=>$outcome,'contracts'=>$contracts, 'paymentTerms'=>$payments]);
     }
 
     /**

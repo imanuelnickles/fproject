@@ -101,9 +101,28 @@ class ContractController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $contract_id)
     {
-        //
+        if($id=="" || $id == "0"){
+            return redirect()->route('show_property');
+        }
+        
+        // need to check if property_id is belongs to auth user_id.
+        // also add fault tolerant for casting property_id
+        $property_id = 0;
+        try{
+            $property_id = (integer)$id;
+        }catch(Exception $e){
+            return redirect()->route('show_property');   
+        }
+        
+        $p = Property::findOrFail($property_id);
+        if(Auth::id() !== $p->user_id){
+            return redirect()->route('show_property');
+        }
+
+        // Validated show form
+        return view('contract.show_contract',['property'=>$p,'property_id'=>$property_id]);
     }
 
     /**
