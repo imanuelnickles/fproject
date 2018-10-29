@@ -21,4 +21,8 @@ class PaymentTerm extends Model
     public function contract(){
         return $this->belongsTo('App\Contract','contract_id');
     }
+
+    public function payment(){
+        return $this->hasMany('App\Payment','payment_term_id');
+    }
 }

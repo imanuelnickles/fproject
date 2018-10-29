@@ -21,7 +21,6 @@
                 <input type="text" name="payment_term_id" value="{{$payment_term->payment_term_id}}" hidden>
                 <input type="text" name="tenant_id" value="{{$payment_term->contract->tenant->tenant_id}}" hidden>
                 <input type="text" name="amount" value="{{ $payment_term->amount }}" hidden>
-                <input type="text" name="amount" value="{{ $payment_term->contract->property_id }}" hidden>
                 {{ csrf_field() }}
                 <div class="form-group" id="form-html">
                     <label>Nama Properti</label>
@@ -52,14 +51,14 @@
                     <input type="date" name="payment_date" value="{{ $payment_term->deadline }}" class="form-control pull-right" id="datepicker" readonly>
                   </div>
                 </div>
-
+                
                 <div class="form-group{{ $errors->has('payment_date') ? ' has-error' : '' }} has-feedback" style="margin-top:25px;">
                   <label>Tanggal Pembayaran</label>
                   <div class="input-group date">
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
-                    <input type="date" name="payment_date" value="{{ old('payment_date') }}" class="form-control pull-right" id="datepicker">
+                    <input type="date" name="payment_date" value="{{ $payment->payment_date }}" class="form-control pull-right" id="datepicker" readonly>
                   </div>
                   @if ($errors->has('payment_date'))
                   <span class="help-block">
@@ -73,9 +72,10 @@
                       <div class="input-group-addon">
                         <i class="glyphicon glyphicon-circle-arrow-up"></i>
                       </div>
-                      <select class="form-control" id="sel1" name="payment_type">
-                        <option value="Transfer">Transfer</option>
-                        <option value="Tunai">Tunai</option>
+                      <select class="form-control" id="sel1" name="payment_type" disabled>
+                        
+                        <option value="Transfer"  {{ ($payment->payment_type) == "Transfer" ? "selected" : "" }}>Transfer</option>
+                        <option value="Tunai" {{ ($payment->payment_type) == "Tunai" ? "selected" : "" }}>Tunai</option>
                       </select>
                   </div>
                 </div>
@@ -85,7 +85,7 @@
                       <div class="input-group-addon">
                         <i class="glyphicon glyphicon-thumbs-up"></i>
                       </div>
-                      <textarea class="form-control" rows="5" id="notes" name="notes" value="{{ old('notes') }}"></textarea>
+                      <textarea readonly class="form-control" rows="5" id="notes" name="notes" value="">{{ $payment->notes }}</textarea>
                   </div>
                   @if ($errors->has('notes'))
                   <span class="help-block">
@@ -93,11 +93,6 @@
                   </span>
                   @endif
                 </div>
-                
-                <div class="form-group" id="button-submit-container">
-                    <button type="submit" class="btn btn-block btn-primary btn-lg">Simpan</button>
-                </div>
-
             </form>   
             </div> 
         </div>
