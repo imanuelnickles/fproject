@@ -135,7 +135,11 @@
               </div>
             </div>
             <div class="box-body">
-              <div id="donut-chart" style="height: 300px;"></div>
+              <div id="donut-chart" style="height: 300px;">
+                @if($total_property == 0)
+                  <center>NO DATA</center>
+                @endif
+              </div>
             </div>
           </div>
           @endif
@@ -156,6 +160,9 @@
             </div>
             <div class="box-body">
               <div class="chart">
+                @if($total_property == 0)
+                  <center>NO DATA</center>
+                @endif
                 <canvas id="barChart" style="height:230px"></canvas>
               </div>
             </div>
@@ -205,7 +212,8 @@
   }
 </script>
 <script src="{{ asset('js/dashboard/dashboard.bar-chart.js') }}"></script>
-@if($active==0)
+
+@if($active==0 && $total_property != 0 )
   <script>
     var donutData = [
             { label: 'Terhuni', data: {{$occupied}}, color: '#3c8dbc' },
