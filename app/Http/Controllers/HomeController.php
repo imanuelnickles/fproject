@@ -111,6 +111,8 @@ class HomeController extends Controller
                 }
             }
         }
+
+        
         
         // Wrapping up to an array
         $dashboardData = [
@@ -122,11 +124,11 @@ class HomeController extends Controller
             "count_overdue_rent"=>$count_overdue_rent,
             "count_upcoming_expenses"=>$count_upcoming_expenses,
             "count_overdue_expenses"=>$count_overdue_expenses,
-            "incomes"=>$cashflow_total[0],
-            "outcomes"=>$cashflow_total[1],
-            "months"=>$cashflow_total[2]
+            "incomes"=>$cashflow_total==null?[]:$cashflow_total[0],
+            "outcomes"=>$cashflow_total==null?[]:$cashflow_total[1],
+            "months"=>$cashflow_total==null?[]:$cashflow_total[2]
         ];
- 
+
         return view('dashboard.dashboard',[
             'property'=>$property,
             'active'=>0,
