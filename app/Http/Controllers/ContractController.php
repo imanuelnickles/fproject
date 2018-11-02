@@ -43,7 +43,7 @@ class ContractController extends Controller
         }
         
         $p = Property::findOrFail($property_id);
-        if(Auth::id() !== $p->user_id){
+        if(Auth::id() != $p->user_id){
             return redirect()->route('show_property');
         }
 
