@@ -136,8 +136,10 @@
             </div>
             <div class="box-body">
               <div id="donut-chart" style="height: 300px;">
+                @if($active==0)
                 @if($total_property == 0)
                   <center>NO DATA</center>
+                @endif
                 @endif
               </div>
             </div>
@@ -160,8 +162,10 @@
             </div>
             <div class="box-body">
               <div class="chart">
-                @if($total_property == 0)
-                  <center>NO DATA</center>
+                @if($active==0)
+                  @if($total_property == 0)
+                    <center>NO DATA</center>
+                  @endif
                 @endif
                 <canvas id="barChart" style="height:230px"></canvas>
               </div>
