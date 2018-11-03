@@ -39,8 +39,8 @@ Artisan::command('SendNotification',function(){
 
         //TODO : integrate with twilio system
         // Your Account SID and Auth Token from twilio.com/console
-        // $sid = 'AC481f762a4c77d2d5c87d42b81e459820';
-        // $token = '39a3f92d991b47a256e0ffab1a98d339';
+        // $sid = '';
+        // $token = '';
         // $client = new Client($sid, $token);
         
         // // Use the client to do fun stuff like send text messages!
