@@ -12,6 +12,7 @@ use App\PaymentTerm;
 use App\Payment;
 use App\Tenant;
 use App\Image;
+use App\PropertyDocument;
 use Webpatser\Uuid\Uuid;
 
 class PropertyController extends Controller
@@ -108,6 +109,9 @@ class PropertyController extends Controller
 
         $images = Image::where('property_id',$property->property_id)
                     ->get();
+        
+        $property_documents = PropertyDocument::where('property_id',$property->property_id)
+                    ->get();
                     
 
         $payments =Payment::with(['paymentTerm'=>function($query) use ($id){
@@ -120,7 +124,7 @@ class PropertyController extends Controller
             }]);
         }])->get();
             
-        return view('property.show_detail',['property'=>$property,'outcome'=>$outcome,'contracts'=>$contracts, 'payments'=>$payments, 'images'=>$images]);
+        return view('property.show_detail',['property'=>$property,'outcome'=>$outcome,'contracts'=>$contracts, 'payments'=>$payments, 'images'=>$images, 'property_documents'=>$property_documents]);
     }
 
     /**
@@ -194,6 +198,27 @@ class PropertyController extends Controller
         return redirect()->route('show_detail_property', ['id' => $property_id]);
     }
 
+    public function uploadDocument($property_id){
+        if (Input::hasFile('file')) {
+            
+            $file = Input::file('file');
+            $description = Input::get('description');
+            if ($description == null) {
+                $description = "";
+            }
+            $newname = (string)Uuid::generate();
+            $file->move('uploadDocuments', $newname);
+            $path = "/uploadDocuments/".$newname;
+
+            PropertyDocument::create([
+                'property_id'=>$property_id,
+                'description'=>$description,
+                'path'=>$path
+            ]);
+        }
+        return redirect()->route('show_detail_property', ['id' => $property_id]);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -203,5 +228,9 @@ class PropertyController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    function get_file_extension($file_name) {
+        return substr(strrchr($file_name,'.'),1);
     }
 }

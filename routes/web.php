@@ -36,6 +36,7 @@ Route::middleware(['auth','notBlocked'])->group(function(){
 
         //Upload 
         Route::post('/upload/galery/{property_id}', 'PropertyController@upload')->name('upload');
+        Route::post('/upload/property-document/{property_id}', 'PropertyController@uploadDocument')->name('upload-document');
 
         // Prefix tenant
         Route::prefix('tenant')->group(function(){

@@ -3,3 +3,5 @@
 /.vagrant
 npm-debug.log
 yarn-error.log
+/public/uploads/*
+/public/uploadDocuments/*
