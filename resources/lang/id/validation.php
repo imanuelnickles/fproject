@@ -124,6 +124,7 @@ return [
         'phone'=>'Telepon',
         'dob'=>'Tanggal Lahir',
         'id-number'=>'No. KTP',
+        'id-pic'=>'Foto KTP',
         'address'=>'Alamat',
         'notes'=>'Notes',
         'name'=>'Nama',

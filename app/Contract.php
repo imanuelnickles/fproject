@@ -31,4 +31,8 @@ class Contract extends Model
     public function tenant(){
         return $this->belongsTo('App\Tenant','tenant_id');
     }
+
+    public function property(){
+        return $this->belongsTo('App\Property','property_id');
+    }
 }

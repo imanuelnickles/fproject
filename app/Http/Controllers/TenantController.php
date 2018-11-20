@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\Tenant;
+use Webpatser\Uuid\Uuid;
 
 class TenantController extends Controller
 {
@@ -48,23 +49,38 @@ class TenantController extends Controller
             'phone'=>'required|regex:/(0)[0-9]{10}/',
             'dob'=>'required',
             'id-number'=>'required|min:16|max:16',
+            'id-pic'=>'required',
             'address'=>'required',
             'notes'=>'max:144'
         ]);
-
-        Tenant::create([
-            'user_id'=>Auth::id(),
-            'title'=>Input::get('title'),
-            'first_name'=>Input::get('first-name'),
-            'last_name'=>Input::get('last-name'),
-            'email'=>Input::get('email'),
-            'mobile'=>Input::get('mobile'),
-            'phone'=>Input::get('phone'),
-            'dob'=>Input::get('dob'),
-            'id_number'=>Input::get('id-number'),
-            'address'=>Input::get('address'),
-            'notes'=>Input::get('notes')
-        ]);
+        
+        $file =  Input::file('id-pic');
+        $newname = (string)Uuid::generate().".".$file->getClientOriginalExtension();;
+        $file->move('uploads', $newname);
+        $path = "/uploads/".$newname;
+        
+        try{
+            Tenant::create([
+                'user_id'=>Auth::id(),
+                'title'=>Input::get('title'),
+                'first_name'=>Input::get('first-name'),
+                'last_name'=>Input::get('last-name'),
+                'email'=>Input::get('email'),
+                'mobile'=>Input::get('mobile'),
+                'phone'=>Input::get('phone'),
+                'dob'=>Input::get('dob'),
+                'id_number'=>Input::get('id-number'),
+                'id_picture'=>$path,
+                'address'=>Input::get('address'),
+                'notes'=>Input::get('notes')
+            ]);
+        }catch(Exception $e){
+            // IMPROVEMENT
+            // show error msg to client using session flash
+            // instead of using back
+            return back();
+        }
+        
         return redirect()->route('show_tenant');
     }
 
@@ -126,6 +142,11 @@ class TenantController extends Controller
         if($t==null){
             return back();
         }
+        
+        $file =  Input::file('id-pic');
+        $newname = (string)Uuid::generate().".".$file->getClientOriginalExtension();;
+        $file->move('uploads', $newname);
+        $path = "/uploads/".$newname;
 
         $t->update([
             'title'=>Input::get('title'),
@@ -136,6 +157,7 @@ class TenantController extends Controller
             'phone'=>Input::get('phone'),
             'dob'=>Input::get('dob'),
             'id_number'=>Input::get('id-number'),
+            'id_picture'=>$path,
             'address'=>Input::get('address'),
             'notes'=>Input::get('notes')
         ]);

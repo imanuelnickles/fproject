@@ -16,7 +16,7 @@
                 <h3 class="box-title">Input masks</h3>
             </div> -->
             <div class="box-body">
-                <form method="POST" action="{{ route('update_tenant',['id'=>$tenant->tenant_id]) }}">
+                <form method="POST"  enctype="multipart/form-data" action="{{ route('update_tenant',['id'=>$tenant->tenant_id]) }}">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label>Titel</label>
@@ -127,6 +127,20 @@
                         @if ($errors->has('id-number'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('id-number') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                    <div class="form-group{{ $errors->has('id-pic') ? ' has-error' : '' }} has-feedback">
+                        <label>Foto KTP</label>
+                        <div>
+                            <img class="img-thumbnail" style="margin-bottom:1%;max-width:360px" src="{{ $tenant->id_picture }}">
+                        </div>
+                        <div class="input-group">
+                            <input type="file" name="id-pic" value="{{ old('id-pic') }}" class="form-control">
+                        </div>
+                        @if ($errors->has('id-pic'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('id-pic') }}</strong>
                             </span>
                         @endif
                     </div>
