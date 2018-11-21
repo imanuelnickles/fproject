@@ -19,6 +19,8 @@
               <li id="tab-tab_2"><a href="#tab_2" data-toggle="tab">Daftar Kontrak</a></li>
               <li id="tab-tab_3"><a href="#tab_3" data-toggle="tab">Daftar Pemasukan</a></li>
               <li id="tab-pengeluaran"><a href="#pengeluaran" data-toggle="tab">Daftar Pengeluaran</a></li>
+              <li id="tab-galery"><a href="#galery" data-toggle="tab">Galeri</a></li>
+              <li id="tab-document"><a href="#document" data-toggle="tab">Property Document</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab_1">
@@ -275,6 +277,47 @@
                 <div class="row">
                   <div class="col-md-12">
                   @include('property.expenses.expenses')
+                  </div>
+                </div>
+              </div>
+              <!-- /.tab-pane -->
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="galery">
+                <div class="row">
+                  <div class="col-md-12">
+                    <form action ="{{route('upload',['property_id'=>$property->property_id])}}" method="post" enctype="multipart/form-data">
+                      <label>Select image to upload:</label>
+                      <input type="file" name="file" id="file">
+                      <br>
+                      <input type="submit" name="upload" id="submit">
+                      <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                    </form>
+                    @foreach($images as $im)
+                      <img style="padding-top:10px; width:23% !important;" src="{{ $im->path }}">
+                    @endforeach
+                    
+                  </div>
+                </div>
+              </div>
+              <!-- /.tab-pane -->
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="document">
+                <div class="row">
+                  <div class="col-md-12">
+                    <form action ="{{route('upload-document',['property_id'=>$property->property_id])}}" method="post" enctype="multipart/form-data">
+                      <label>Select document to upload:</label>
+                      <input type="file" name="file" id="file">
+                      <br>
+                      <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" name="description" class="form-control">
+                      </div>
+                      <input type="submit" name="upload" id="submit">
+                      <input type="hidden" value="{{ csrf_token() }}" name="_token">
+                    </form>
+                    <br>
+
+                    @include('property.property_documents')
                   </div>
                 </div>
               </div>

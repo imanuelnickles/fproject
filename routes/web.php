@@ -33,6 +33,11 @@ Route::middleware(['auth','notBlocked'])->group(function(){
         // Dashboard
         Route::get('/home', 'HomeController@index')->name('home');
         Route::post('/home','HomeController@show')->name('specific_dashboard');
+
+        //Upload 
+        Route::post('/upload/galery/{property_id}', 'PropertyController@upload')->name('upload');
+        Route::post('/upload/property-document/{property_id}', 'PropertyController@uploadDocument')->name('upload-document');
+
         // Prefix tenant
         Route::prefix('tenant')->group(function(){
             Route::get('/add','TenantController@create')->name('add_tenant');

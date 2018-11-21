@@ -116,10 +116,10 @@ class HomeController extends Controller
         
         // Wrapping up to an array
         $dashboardData = [
-            "total_upcoming_rent"=>$total_upcoming_rent,
-            "total_overdue_rent"=>$total_overdue_rent,
-            "total_upcoming_expenses"=>$total_upcoming_expenses,
-            "total_overdue_expenses"=>$total_overdue_expenses,
+            "total_upcoming_rent"=>number_format($total_upcoming_rent,0),
+            "total_overdue_rent"=>number_format($total_overdue_rent,0),
+            "total_upcoming_expenses"=>number_format($total_upcoming_expenses,0),
+            "total_overdue_expenses"=>number_format($total_overdue_expenses,0),
             "count_upcoming_rent"=>$count_upcoming_rent,
             "count_overdue_rent"=>$count_overdue_rent,
             "count_upcoming_expenses"=>$count_upcoming_expenses,
@@ -292,8 +292,6 @@ class HomeController extends Controller
                     ->with(['contracts'=>function($query){
                         // Get active contracts based on date
                         return $query
-                        ->whereDate('start_date','<=',Carbon::now())
-                        ->whereDate('end_date','>=',Carbon::now())
                         ->with(['paymentTerm'=>function($query1){
                             //Get next term of payment / remain payment
                             return $query1->whereNull('payment_date');
