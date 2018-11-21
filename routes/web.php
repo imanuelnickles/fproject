@@ -62,7 +62,7 @@ Route::middleware(['auth','notBlocked'])->group(function(){
             Route::post('/{id}/expenses/add','ExpensesController@store')->name('add_property_expenses');
             Route::get('/{id}/expenses/{expenses_id}/edit','ExpensesController@edit')->name('edit_property_expenses');
             Route::post('/{id}/expenses/{expenses_id}/edit','ExpensesController@update')->name('update_property_expenses');
-            Route::post('/{id}/expenses/{expenses_id}/edit','ExpensesController@destroy')->name('delete_property_expenses');
+            Route::post('/{id}/expenses/{expenses_id}/delete','ExpensesController@destroy')->name('delete_property_expenses');
 
             // Contract
             Route::get('/{id}/contract/add','ContractController@create')->name('add_contract');
