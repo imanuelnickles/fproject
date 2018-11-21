@@ -9,6 +9,7 @@ use App\Property;
 use App\Contract;
 use App\PaymentTerm;
 use App\Tenant;
+use Carbon\Carbon;
 
 class ContractController extends Controller
 {
@@ -72,11 +73,15 @@ class ContractController extends Controller
             'deadline.*'=> "required|date|distinct",
         ]);
         
+        $start_date = Input::get('start_date');
+        $end_date = Input::get('end_date');
+        $property_id = Input::get('property_id');
+
         $contract = Contract::create([
-            'property_id'=>Input::get('property_id'),
+            'property_id'=>$property_id,
             'tenant_id'=>Input::get('tenant_id'),
-            'start_date'=>Input::get('start_date'),
-            'end_date'=>Input::get('end_date'),
+            'start_date'=>$start_date,
+            'end_date'=>$end_date,
             'contract_date'=>Input::get('contract_date'),
         ]);
         
@@ -92,6 +97,14 @@ class ContractController extends Controller
             ]);
         }
 
+        // Also include mechanism for update the property status
+        $now = Carbon::now()->toDateString();
+        if($start_date <= $now && $end_date >= $now){
+            $p = Property::where('property_id',$property_id);
+            $p->update([
+                'occupied'=>1,
+            ]);
+        }
         return redirect()->route('show_detail_property', ['id' => Input::get('property_id')]);
     }
 
