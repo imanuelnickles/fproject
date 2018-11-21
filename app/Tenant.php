@@ -12,7 +12,7 @@ class Tenant extends Model
     protected $primaryKey = 'tenant_id'; 
 
     protected $fillable = [
-        'user_id','title', 'first_name', 'last_name','email','mobile','phone','dob','id_number','address','notes'
+        'user_id','title', 'first_name', 'last_name','email','mobile','phone','dob','id_number','id_picture','address','notes'
     ];
 
     // Soft Deletes Field

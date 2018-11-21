@@ -97,7 +97,7 @@ class AdminController extends Controller
     public function userDetail($id){
         // Find user that match to `id`
         $user =  User::findOrFail($id);
-        $expired  = Subscription::where('user_id',Auth::id())
+        $expired  = Subscription::where('user_id',$id)
                     ->where('end_date','<=',date('Y:m:d'))
                     ->first();
         $is_sub_expired = $expired != null ? true : false;

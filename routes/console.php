@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Inspiring;
 
 use App\PaymentTerm;
+use App\Contract;
+use App\Property;
 use Carbon\Carbon;
 
 // Use the REST API Client to make requests to the Twilio REST API
@@ -54,5 +56,38 @@ Artisan::command('SendNotification',function(){
         //         'body' => 'Hey Jenny! Good luck on the bar exam!'
         //     )
         // );
+    }
+});
+
+Artisan::command('UpdateDB',function(){
+    // 1. Update property status 1 to 0
+    $now = Carbon::now()->toDateString();
+    $expiredContract = Contract::where('end_date','<',$now)
+            ->with(['property'=>function($query){
+                return $query->where('occupied',1);
+            }])->get();
+    foreach($expiredContract as $e){
+        if($e->property != null){
+            $p = Property::where('property_id',$e->property_id);
+            $p->update([
+                'occupied'=>0
+            ]);
+        }
+    }
+
+    // 2. Update property status 0 to 1
+    $activeContract = Contract::where('start_date','<=',$now)
+            ->where('end_date','>=',$now)
+            ->with(['property'=>function($query){
+                return $query->where('occupied',0);
+            }])->get();
+    
+    foreach($activeContract as $a){
+        if($a->property != null){
+            $p = Property::where('property_id',$a->property_id);
+            $p->update([
+                'occupied'=>1
+            ]);
+        }
     }
 });
