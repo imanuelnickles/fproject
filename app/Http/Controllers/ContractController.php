@@ -9,6 +9,7 @@ use App\Property;
 use App\Contract;
 use App\PaymentTerm;
 use App\Tenant;
+use App\ContractTemplate;
 use Carbon\Carbon;
 
 class ContractController extends Controller
@@ -184,4 +185,95 @@ class ContractController extends Controller
     {
         //
     }
+
+    public function generateContract($id, $contract_id)
+    {
+        // Flow
+        // 1. Check Template Exists
+        // 2. Get Contract Data (for injection)
+        // 3. Generate UUID (for generated file) if not exists in DB
+        // 4. Update Contract (contract_template)
+
+        // $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        // $section = $phpWord->addSection();
+        // $name = "Imanuel";
+        
+        // $c = ContractTemplate::all();
+        // $description = $c[0]->format;
+        // $description = str_replace('$name',$name,$description);
+
+        // $section->addText($description);
+
+        // $version = 'Word2007';
+        // $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, $version);
+
+        // try {
+        //     $objWriter->save(storage_path('helloWorld.docx'));
+        // } catch (Exception $e) {
+        // }
+
+
+        // return response()->download(storage_path('helloWorld.docx'));
+        $this->replacePlaceholder();
+        dd("Sabar");
+    }
+
+    public function replacePlaceholder(){
+        $template_file_name = storage_path('helloWorld.docx');
+ 
+        $rand_no = rand(111111, 999999);
+        $fileName = "results_" . $rand_no . ".docx";
+        
+        $folder   = storage_path("results_");
+        $full_path = $folder . '/' . $fileName;
+        
+       
+            if (!file_exists($folder))
+            {
+                mkdir($folder);
+            }       
+
+            //Copy the Template file to the Result Directory
+            //copy($template_file_name, $full_path);
+        //     // dd("stop");
+        //     // add calss Zip Archive
+        //     // $zip_val = new ZipArchive;
+        //     $zip_val = new \PhpOffice\PhpWord\Shared\ZipArchive();
+        //     //Docx file is nothing but a zip file. Open this Zip File
+        //     if($zip_val->open($full_path) == true)
+        //     {
+        //         // In the Open XML Wordprocessing format content is stored.
+        //         // In the document.xml file located in the word directory.
+                
+        //         $key_file_name = 'word/document.docx';
+        //         $message = $zip_val->getFromName($key_file_name);                
+                            
+        //         $timestamp = date('d-M-Y H:i:s');
+                
+        //         // this data Replace the placeholders with actual values
+        //         $message = str_replace("client_full_name",      "onlinecode org",       $message);
+        //         $message = str_replace("client_email_address",  "ingo@onlinecode.org",  $message);
+        //         $message = str_replace("date_today",            $timestamp,             $message);      
+        //         $message = str_replace("client_website",        "<a clas>", $message);      
+        //         $message = str_replace("client_mobile_number",  "+1999999999",          $message);
+                
+        //         //Replace the content with the new content created above.
+        //         $zip_val->addFromString($key_file_name, $message);
+        //         $return =$zip_val->close();
+        //         if ($return==TRUE){
+        //             echo "Success!";
+        //         }
+        //     }
+        // }
+        // catch (Exception $exc) 
+        // {
+        //     $error_message =  "Error creating the Word Document";
+        //     var_dump($exc);
+        // }
+        $template = new \PhpOffice\PhpWord\TemplateProcessor($template_file_name);
+        $template->setValue("client_full_name","nakon");
+        $template->saveAs($full_path); 
+
+
+}
 }
