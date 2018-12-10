@@ -9,8 +9,10 @@ use App\Property;
 use App\Contract;
 use App\PaymentTerm;
 use App\Tenant;
+use App\User;
 use App\ContractTemplate;
 use Carbon\Carbon;
+use Webpatser\Uuid\Uuid;
 
 class ContractController extends Controller
 {
@@ -73,6 +75,7 @@ class ContractController extends Controller
             'contract_date'=>'required',
             'amount.*'=> "required",
             'deadline.*'=> "required|date|distinct",
+            'notes'=>"required",
         ]);
         
         $start_date = Input::get('start_date');
@@ -86,6 +89,7 @@ class ContractController extends Controller
             'end_date'=>$end_date,
             'notes'=>Input::get('notes'),
             'contract_date'=>Input::get('contract_date'),
+            'notes'=>Input::get('notes'),
         ]);
         
         $amounts = Input::get('amount.*');
@@ -192,90 +196,131 @@ class ContractController extends Controller
     {
         // Flow
         // 1. Check Template Exists
+        $ct = ContractTemplate::where('user_id',Auth::id())->get()->first();
+        if($ct==null){
+            return redirect()->route('add_edit_template_contract');
+        }
+
         // 2. Get Contract Data (for injection)
-        // 3. Generate UUID (for generated file) if not exists in DB
-        // 4. Update Contract (contract_template)
+        $cn = Contract::findOrFail($contract_id);
+        $tn =  Tenant::findOrFail($cn->tenant_id);
+        $prop = Property::findOrFail($cn->property_id);
+        $user = User::findOrfail(Auth::id());
+        $pt = PaymentTerm::where('contract_id',$contract_id)->orderBy('contract_id')->get();
 
-        // $phpWord = new \PhpOffice\PhpWord\PhpWord();
-        // $section = $phpWord->addSection();
-        // $name = "Imanuel";
+        // Get tenant name
+
+
+        $template_file_name = storage_path($ct->contract_template);
+        $folder   = storage_path("temp_contract_temp");
+        if (!file_exists($folder))
+        {
+            mkdir($folder);
+        }
         
-        // $c = ContractTemplate::all();
-        // $description = $c[0]->format;
-        // $description = str_replace('$name',$name,$description);
+        $newname = (string)Uuid::generate();
+        // For now only .docx template supported (2007-newer)
+        $full_path = $folder . '/' . $newname.'.docx';
 
-        // $section->addText($description);
+        // Open template with PHPWord Template Processor
+        $template = new \PhpOffice\PhpWord\TemplateProcessor($template_file_name);
+        // Replace pre-defined varible in word template
+        // Defined as many as you like :)
+        /* 
+        1. ${user_name} | ${tenant_name}
+        2. ${user_gender} | ${tenant_gender} | 
+        3. ${user_id_number} | ${tenant_id_number}
+        4. ${user_bod} | ${tenant_bod}
+        5. ${user_mobile} | ${tenant_mobile} 
+        6. ${user_phone} | ${tenant_phone}
+        7. ${user_address} | ${tenant_address}
+        8. ${contract_start_date} | ${contract_end_date}
+        9. ${property_name}
+        10. ${property_address}
+        11. ${property_area}
+        12. ${property_type}
+        14. ${property_rent_price}
+        15. ${property_down_payment} | ${property_down_payment_deadline}
+        16. ${user_bank}
+        */
+        $variable = [
+            // User
+            "user_name"=>$user->name,
+            //"user_gender"=>"",
+            //"user_id_number"=>"user_id_number",
+            //"user_bod"=>"",
+            //"user_mobile"=>"",
+            //"user_phone"=>"",
+            //"user_address"=>"",
+            //"user_bank"=>"",
+            // Tenant
+            "tenant_name"=>$tn->title." ".$tn->first_name." ".$tn->last_name,
+            "tenant_gender"=>"",
+            "tenant_id_number"=>$tn->id_number,
+            "tenant_bod"=>$tn->dob,
+            "tenant_mobile"=>$tn->mobile,
+            "tenant_phone"=>$tn->phone,
+            "tenant_address"=>$tn->address,
+            // Contract
+            "contract_start_date"=>$cn->start_date,
+            "contract_end_date"=>$cn->end_date,
+            // Property
+            "property_name"=>$prop->name,
+            "property_address"=>$prop->address,
+            "property_area"=>$prop->building_area,
+            "property_surface_area"=>$prop->surface_area,
+            "property_type"=>$prop->property_type,
+            "property_rent_price"=>$prop->rent_price,
+            "property_down_payment"=>$pt[0]->amount, //known as first payment
+            "property_down_payment_deadline"=>$pt[0]->deadline,
+        ];
 
-        // $version = 'Word2007';
-        // $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, $version);
+        // Loop through variable (K/V)
+        foreach($variable as $key => $value){
+            $template->setValue($key,$value);
+        }
 
-        // try {
-        //     $objWriter->save(storage_path('helloWorld.docx'));
-        // } catch (Exception $e) {
-        // }
+        // Inject varible to template.
+        $template->saveAs($full_path);
 
+        // Perform download response
+        return response()->download($full_path);
 
-        // return response()->download(storage_path('helloWorld.docx'));
-        $this->replacePlaceholder();
-        dd("Sabar");
     }
 
-    public function replacePlaceholder(){
-        $template_file_name = storage_path('helloWorld.docx');
- 
-        $rand_no = rand(111111, 999999);
-        $fileName = "results_" . $rand_no . ".docx";
-        
-        $folder   = storage_path("results_");
-        $full_path = $folder . '/' . $fileName;
-        
-       
-            if (!file_exists($folder))
-            {
-                mkdir($folder);
-            }       
+    public function showTemplate(){
+        $ct = ContractTemplate::where('user_id',Auth::id())->get()->first();
+        $is_uploaded = ($ct != null);
+        return view('contract/contract_template',['is_uploaded'=>$is_uploaded]);
+    }
 
-            //Copy the Template file to the Result Directory
-            //copy($template_file_name, $full_path);
-        //     // dd("stop");
-        //     // add calss Zip Archive
-        //     // $zip_val = new ZipArchive;
-        //     $zip_val = new \PhpOffice\PhpWord\Shared\ZipArchive();
-        //     //Docx file is nothing but a zip file. Open this Zip File
-        //     if($zip_val->open($full_path) == true)
-        //     {
-        //         // In the Open XML Wordprocessing format content is stored.
-        //         // In the document.xml file located in the word directory.
-                
-        //         $key_file_name = 'word/document.docx';
-        //         $message = $zip_val->getFromName($key_file_name);                
-                            
-        //         $timestamp = date('d-M-Y H:i:s');
-                
-        //         // this data Replace the placeholders with actual values
-        //         $message = str_replace("client_full_name",      "onlinecode org",       $message);
-        //         $message = str_replace("client_email_address",  "ingo@onlinecode.org",  $message);
-        //         $message = str_replace("date_today",            $timestamp,             $message);      
-        //         $message = str_replace("client_website",        "<a clas>", $message);      
-        //         $message = str_replace("client_mobile_number",  "+1999999999",          $message);
-                
-        //         //Replace the content with the new content created above.
-        //         $zip_val->addFromString($key_file_name, $message);
-        //         $return =$zip_val->close();
-        //         if ($return==TRUE){
-        //             echo "Success!";
-        //         }
-        //     }
-        // }
-        // catch (Exception $exc) 
-        // {
-        //     $error_message =  "Error creating the Word Document";
-        //     var_dump($exc);
-        // }
-        $template = new \PhpOffice\PhpWord\TemplateProcessor($template_file_name);
-        $template->setValue("client_full_name","nakon");
-        $template->saveAs($full_path); 
+    public function saveTemplate(Request $request){
+        $this->validate($request,[
+            'contract_template' => "required",
+        ]);
 
+        $folder   = storage_path("contract_template");
+        if (!file_exists($folder))
+        {
+            mkdir($folder);
+        }
 
-}
+        $file = Input::file('contract_template');
+        $newname = (string)Uuid::generate().".".$file->getClientOriginalExtension();
+        $file_dest = 'contract_template/' . $newname;
+        $file->move($folder,$newname);
+
+        $exists = ContractTemplate::where('user_id',Auth::id())->get()->first();
+        if($exists==null){
+            ContractTemplate::create([
+                'user_id'=>Auth::id(),
+                'contract_template'=>$file_dest,
+            ]);
+        }else{
+            ContractTemplate::find($exists->contract_template_id)->update([
+                'contract_template'=>$file_dest,
+            ]);
+        }
+        return back();
+    }
 }

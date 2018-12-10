@@ -13,10 +13,11 @@ class CreateContractTemplate extends Migration
      */
     public function up()
     {
-        Schema::table('contract_templates', function (Blueprint $table) {
+        Schema::create('contract_templates', function (Blueprint $table) {
             $table->increments('contract_template_id');
             $table->integer('user_id')->unsigned();
             $table->string('contract_template');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +28,6 @@ class CreateContractTemplate extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('contract_template');
+        Schema::dropIfExists('contract_templates');
     }
 }
