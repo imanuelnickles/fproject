@@ -135,6 +135,17 @@
             <li><a href="{{ route('show_tenant') }}"><i class="fa fa-circle-o"></i>Lihat Daftar</a></li>
           </ul>
         </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>Pengaturan</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="{{ route('add_edit_template_contract') }}"><i class="fa fa-circle-o"></i>Template Kontrak </a></li>
+          </ul>
+        </li>
         <!-- End of Tenant -->
         <li class="header">REPORTING</li>
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
