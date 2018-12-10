@@ -69,6 +69,7 @@ class ContractController extends Controller
             'tenant_id'=>'required',
             'start_date'=>'required',
             'end_date'=>'required',
+            'notes'=>'required',
             'contract_date'=>'required',
             'amount.*'=> "required",
             'deadline.*'=> "required|date|distinct",
@@ -83,6 +84,7 @@ class ContractController extends Controller
             'tenant_id'=>Input::get('tenant_id'),
             'start_date'=>$start_date,
             'end_date'=>$end_date,
+            'notes'=>Input::get('notes'),
             'contract_date'=>Input::get('contract_date'),
         ]);
         

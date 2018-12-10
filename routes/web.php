@@ -48,6 +48,12 @@ Route::middleware(['auth','notBlocked'])->group(function(){
             Route::post('/delete/{id}','TenantController@destroy')->name('delete_tenant');
         });
 
+        // Prefix tenant
+        Route::prefix('report')->group(function(){
+            Route::get('/income-expense','ReportController@reportIncomeExpense')->name('report_income_expense');
+            Route::get('/income-expense/view','ReportController@reportIncomeExpenseView')->name('report_income_expense_view');
+        });
+
         // Prefix property
         Route::prefix('property')->group(function(){
             Route::get('/','PropertyController@index')->name('show_property');
