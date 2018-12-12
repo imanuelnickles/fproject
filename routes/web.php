@@ -52,6 +52,10 @@ Route::middleware(['auth','notBlocked'])->group(function(){
         Route::prefix('report')->group(function(){
             Route::get('/income-expense','ReportController@reportIncomeExpense')->name('report_income_expense');
             Route::get('/income-expense/view','ReportController@reportIncomeExpenseView')->name('report_income_expense_view');
+            Route::get('/overdue','ReportController@reportOverdue')->name('report_overdue');
+            Route::get('/overdue/view','ReportController@reportOverdueView')->name('report_overdue_view');
+            Route::get('/upcoming-income','ReportController@reportUpcomingIncome')->name('report_upcoming_income');
+            Route::get('/upcoming-income/view','ReportController@reportUpcomingIncomeView')->name('report_upcoming_income_view');
         });
 
         // Prefix property

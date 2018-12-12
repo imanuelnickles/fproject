@@ -149,9 +149,8 @@
         <!-- End of Tenant -->
         <li class="header">Laporan</li>
         <li><a href="{{ route('report_income_expense') }}"><i class="fa fa-circle-o text-red"></i> <span>Pendapatan dan Pengeluaran</span></a></li>
-        <!-- <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li> -->
-        
+        <li><a href="{{ route('report_overdue') }}"><i class="fa fa-circle-o text-red"></i> <span>Keterlambatan Pembayaran</span></a></li>
+        <li><a href="{{ route('report_upcoming_income') }}"><i class="fa fa-circle-o text-red"></i> <span>Pendapatan Mendatang</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
