@@ -122,6 +122,21 @@
         </li>
         <!-- End of Property -->
 
+        <!-- End of Contract -->
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>Kontrak</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="{{ route('add_general_contract') }}"><i class="fa fa-circle-o"></i> Tambah Baru</a></li>
+            <li><a href="{{ route('view_contract_list') }}"><i class="fa fa-circle-o"></i> Lihat Daftar</a></li>
+          </ul>
+        </li>
+        <!-- End of Contract -->
+
         <!-- Tenant -->
         <li class="treeview">
           <a href="#">

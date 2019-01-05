@@ -95,21 +95,22 @@ class HomeController extends Controller
             $count_overdue_rent+=$rents[3];
 
 
-            // Cashflow
-            $cashflow = $this->getFilteredCashflow($p->property_id);
-            if($cashflow_flag == 0){
-                // Init
-                array_push($cashflow_total, $cashflow[0]);
-                array_push($cashflow_total, $cashflow[1]);
-                array_push($cashflow_total, $cashflow[2]);
-                $cashflow_flag++;
-            }else{
-                for($i=0;$i<2;$i++){
-                    for($j=0;$j<6;$j++){
-                        $cashflow_total[$i][$j]+=$cashflow[$i][$j];
-                    }
-                }
-            }
+            // TODO: error
+            // Cashflow 
+            // $cashflow = $this->getFilteredCashflow($p->property_id);
+            // if($cashflow_flag == 0){
+            //     // Init
+            //     array_push($cashflow_total, $cashflow[0]);
+            //     array_push($cashflow_total, $cashflow[1]);
+            //     array_push($cashflow_total, $cashflow[2]);
+            //     $cashflow_flag++;
+            // }else{
+            //     for($i=0;$i<2;$i++){
+            //         for($j=0;$j<6;$j++){
+            //             $cashflow_total[$i][$j]+=$cashflow[$i][$j];
+            //         }
+            //     }
+            // }
         }
 
         

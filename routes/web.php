@@ -58,6 +58,12 @@ Route::middleware(['auth','notBlocked'])->group(function(){
             Route::get('/upcoming-income/view','ReportController@reportUpcomingIncomeView')->name('report_upcoming_income_view');
         });
 
+        Route::prefix('contract')->group(function(){
+            Route::get('/list','ContractController@index')->name('view_contract_list');
+            Route::get('/add','ContractController@addGeneralContract')->name('add_general_contract');
+            Route::post('/add','ContractController@store')->name('save_contract');
+        });
+
         // Prefix property
         Route::prefix('property')->group(function(){
             Route::get('/','PropertyController@index')->name('show_property');

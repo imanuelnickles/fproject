@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
 use App\Property;
 use App\Contract;
 use App\PaymentTerm;
@@ -23,7 +24,15 @@ class ContractController extends Controller
      */
     public function index()
     {
-        //
+        $rawQuery = "
+        select  c.contract_id, c.property_id, p.name, p.address, p.city, t.title, t.first_name, t.last_name, c.start_date, c.end_date, c.contract_date from contracts as c
+        inner join properties as p on p.property_id = c.property_id
+        inner join tenants as t on c.tenant_id = t.tenant_id
+        where p.user_id = ".Auth::id()."
+        ";
+        $contracts = DB::select($rawQuery);
+        
+        return view('contract.generalContracts',['contracts'=>$contracts]);
     }
 
     /**
@@ -31,6 +40,17 @@ class ContractController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function addGeneralContract()
+    {
+        $p = Property::where('user_id',Auth::id())->get();
+        $tenant = Tenant::where('user_id',Auth::id())->get();
+
+        // Validated show form
+        return view('contract.add_contract_general',['property'=>$p,'tenant'=>$tenant]);
+    }
+
+
     public function create($id)
     {
         if($id=="" || $id == "0"){
@@ -65,7 +85,6 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-        
         $validation = $this->validate($request,[
             'property_id'=>'required',
             'tenant_id'=>'required',
@@ -112,7 +131,7 @@ class ContractController extends Controller
                 'occupied'=>1,
             ]);
         }
-        return redirect()->route('show_detail_property', ['id' => Input::get('property_id')]);
+        return redirect()->route('view_contract_list');
     }
 
     /**
@@ -285,6 +304,9 @@ class ContractController extends Controller
 
         // Perform download response
         return response()->download($full_path);
+    }
+
+    public function viewContractList() {
 
     }
 
