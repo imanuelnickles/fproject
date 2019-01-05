@@ -30,7 +30,7 @@ class ContractController extends Controller
         inner join tenants as t on c.tenant_id = t.tenant_id
         where p.user_id = ".Auth::id()."
         ";
-        $contracts = DB::select($rawQuery);
+        $contracts = DB::select($rawQuery);        
         
         return view('contract.generalContracts',['contracts'=>$contracts]);
     }

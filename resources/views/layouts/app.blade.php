@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="{{ asset('plugin/bower_components/Ionicons/css/ionicons.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('plugin/dist/css/AdminLTE.min.css') }}">
+  <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ asset('plugin/plugins/iCheck/square/blue.css') }}">

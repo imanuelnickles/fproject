@@ -37,6 +37,8 @@ Route::middleware(['auth','notBlocked'])->group(function(){
         //Upload 
         Route::post('/upload/galery/{property_id}', 'PropertyController@upload')->name('upload');
         Route::post('/upload/property-document/{property_id}', 'PropertyController@uploadDocument')->name('upload-document');
+        Route::get('/upload/remove/{id}/{remove_file}/{property_id}','PropertyController@deleteFile')->name('delete_file');
+        Route::get('/upload/remove-image/{id}/{remove_file}/{property_id}','PropertyController@deleteImage')->name('delete_img_file');
 
         // Prefix tenant
         Route::prefix('tenant')->group(function(){
