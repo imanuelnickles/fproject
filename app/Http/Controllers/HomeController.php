@@ -63,7 +63,6 @@ class HomeController extends Controller
         }
 
         $filtered_property = Property::findOrFail($bulk_filtered_property);
-        
         foreach($filtered_property as $p){
 
             // Expenses
@@ -94,23 +93,25 @@ class HomeController extends Controller
             $total_overdue_rent+=$rents[1];
             $count_overdue_rent+=$rents[3];
 
-
-            // TODO: error
             // Cashflow 
-            // $cashflow = $this->getFilteredCashflow($p->property_id);
-            // if($cashflow_flag == 0){
-            //     // Init
-            //     array_push($cashflow_total, $cashflow[0]);
-            //     array_push($cashflow_total, $cashflow[1]);
-            //     array_push($cashflow_total, $cashflow[2]);
-            //     $cashflow_flag++;
-            // }else{
-            //     for($i=0;$i<2;$i++){
-            //         for($j=0;$j<6;$j++){
-            //             $cashflow_total[$i][$j]+=$cashflow[$i][$j];
-            //         }
-            //     }
-            // }
+            $cashflow = $this->getFilteredCashflow($p->property_id);
+
+            if($cashflow_flag == 0){
+                // Init
+                array_push($cashflow_total, $cashflow[0]);
+                array_push($cashflow_total, $cashflow[1]);
+                array_push($cashflow_total, $cashflow[2]);
+                $cashflow_flag++;
+                // dd("HEYDONG");
+            }else{
+                for($i=0;$i<2;$i++){
+                    for($j=0;$j<6;$j++){
+                        if(count($cashflow[$i])!=0){
+                            $cashflow_total[$i][$j]+=$cashflow[$i][$j];
+                        }
+                    }
+                }
+            }
         }
 
         
