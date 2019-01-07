@@ -12,6 +12,7 @@ use App\PaymentTerm;
 use App\Payment;
 use App\Tenant;
 use App\Image;
+use File;
 use App\PropertyDocument;
 use Webpatser\Uuid\Uuid;
 
@@ -87,6 +88,20 @@ class PropertyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function deleteFile($id, $remove_file, $property_id) 
+    {   
+        File::delete(substr(base64_decode($remove_file), 1));
+        PropertyDocument::where('property_document_id',$id)->delete();
+        return $this->show($property_id);
+    }
+
+    public function deleteImage($id, $remove_file, $property_id) 
+    {   
+        File::delete(substr(base64_decode($remove_file), 1));
+        Image::where('image_id',$id)->delete();
+        return $this->show($property_id);
+    }
+
     public function show($id)
     {
         $property=Property::where('property_id',$id)

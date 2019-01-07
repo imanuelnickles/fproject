@@ -37,6 +37,8 @@ Route::middleware(['auth','notBlocked'])->group(function(){
         //Upload 
         Route::post('/upload/galery/{property_id}', 'PropertyController@upload')->name('upload');
         Route::post('/upload/property-document/{property_id}', 'PropertyController@uploadDocument')->name('upload-document');
+        Route::get('/upload/remove/{id}/{remove_file}/{property_id}','PropertyController@deleteFile')->name('delete_file');
+        Route::get('/upload/remove-image/{id}/{remove_file}/{property_id}','PropertyController@deleteImage')->name('delete_img_file');
 
         // Prefix tenant
         Route::prefix('tenant')->group(function(){
@@ -46,6 +48,22 @@ Route::middleware(['auth','notBlocked'])->group(function(){
             Route::get('/{id}','TenantController@show')->name('show_detail_tenant');
             Route::post('/edit/{id}','TenantController@update')->name('update_tenant');
             Route::post('/delete/{id}','TenantController@destroy')->name('delete_tenant');
+        });
+
+        // Prefix tenant
+        Route::prefix('report')->group(function(){
+            Route::get('/income-expense','ReportController@reportIncomeExpense')->name('report_income_expense');
+            Route::get('/income-expense/view','ReportController@reportIncomeExpenseView')->name('report_income_expense_view');
+            Route::get('/overdue','ReportController@reportOverdue')->name('report_overdue');
+            Route::get('/overdue/view','ReportController@reportOverdueView')->name('report_overdue_view');
+            Route::get('/upcoming-income','ReportController@reportUpcomingIncome')->name('report_upcoming_income');
+            Route::get('/upcoming-income/view','ReportController@reportUpcomingIncomeView')->name('report_upcoming_income_view');
+        });
+
+        Route::prefix('contract')->group(function(){
+            Route::get('/list','ContractController@index')->name('view_contract_list');
+            Route::get('/add','ContractController@addGeneralContract')->name('add_general_contract');
+            Route::post('/add','ContractController@store')->name('save_contract');
         });
 
         // Prefix property
@@ -68,11 +86,16 @@ Route::middleware(['auth','notBlocked'])->group(function(){
             Route::get('/{id}/contract/add','ContractController@create')->name('add_contract');
             Route::get('/{id}/contract/{contract_id}','ContractController@show')->name('show_contract');
             Route::post('/{id}/contract/add','ContractController@store')->name('save_contract');
-
+            Route::get('/{id}/contract/{contract_id}/generate','ContractController@generateContract')->name('generate_contract');
             // Payment
             Route::get('/{id}/payment/{payment_term_id}/add','PaymentController@create')->name('add_payment');
             Route::get('/{id}/payment/{payment_term_id}/{payment_id}','PaymentController@show')->name('show_payment');
             Route::post('/{id}/payment/{payment_term_id}/add','PaymentController@store')->name('save_payment');
+        });
+
+        Route::prefix('settings')->group(function(){
+            Route::get('/contract/template','ContractController@showTemplate')->name('add_edit_template_contract');
+            Route::post('/contract/template','ContractController@saveTemplate')->name('save_edit_template_contract');
         });
     });    
 });

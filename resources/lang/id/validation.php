@@ -136,7 +136,8 @@ return [
         'total_bedrooms'=>'Jumlah kamar',
         'valuation'=>'Valuasi',
         'payment_date'=>'Tanggal pembayaran',
-        'amount.*'=>'Jumlah pembayaran'
+        'amount.*'=>'Jumlah pembayaran',
+        'contract_template'=>'Template kontrak'
     ],
 
 ];

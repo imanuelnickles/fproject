@@ -293,13 +293,19 @@
                       <input type="hidden" value="{{ csrf_token() }}" name="_token">
                     </form>
                     @foreach($images as $im)
-                      <img style="padding-top:10px; width:23% !important;" src="{{ $im->path }}">
+                    <div class="gallery">
+                      <a target="_blank" href="{{$im->path}}">
+                        <img src="{{ $im->path }}"  width="600" height="400">
+                      </a>
+                      <div class="desc">
+                        <a class="btn btn-social-icon btn-bitbucket" href="{{route('delete_img_file',['id'=>$im->image_id,'property_id'=>$property->property_id, 'remove_file'=>base64_encode($im->path)])}}"><i class="fa fa-bitbucket"></i></a>
+                      </div>
+                    </div>
                     @endforeach
-                    
                   </div>
                 </div>
               </div>
-              <!-- /.tab-pane -->
+              
               <!-- /.tab-pane -->
               <div class="tab-pane" id="document">
                 <div class="row">

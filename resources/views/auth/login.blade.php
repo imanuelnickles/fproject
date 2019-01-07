@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="login-box-body">
-    <p class="login-box-msg"></p>
+    <p class="login-box-msg">Masuk</p>
 
     <form method="POST" action="{{ route('login') }}">
         {{ csrf_field() }}
@@ -16,7 +16,7 @@
         @endif
       </div>
       <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }} has-feedback">
-        <input type="password" name="password" class="form-control" placeholder="Password">
+        <input type="password" name="password" class="form-control" placeholder="Kata sandi">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         @if ($errors->has('password'))
             <span class="help-block">
@@ -29,7 +29,7 @@
         <div class="col-xs-8">
           <div class="checkbox icheck">
             <label>
-              <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
+              <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Ingat Saya
             </label>
           </div>
         </div>

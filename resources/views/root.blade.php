@@ -29,6 +29,8 @@
   <link rel="stylesheet" href="{{ asset('plugin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
   <!-- DataTables -->
   <link rel="stylesheet" href="{{ asset('plugin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+  
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -122,6 +124,21 @@
         </li>
         <!-- End of Property -->
 
+        <!-- End of Contract -->
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>Kontrak</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="{{ route('add_general_contract') }}"><i class="fa fa-circle-o"></i> Tambah Baru</a></li>
+            <li><a href="{{ route('view_contract_list') }}"><i class="fa fa-circle-o"></i> Lihat Daftar</a></li>
+          </ul>
+        </li>
+        <!-- End of Contract -->
+
         <!-- Tenant -->
         <li class="treeview">
           <a href="#">
@@ -135,12 +152,22 @@
             <li><a href="{{ route('show_tenant') }}"><i class="fa fa-circle-o"></i>Lihat Daftar</a></li>
           </ul>
         </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>Pengaturan</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="{{ route('add_edit_template_contract') }}"><i class="fa fa-circle-o"></i>Template Kontrak </a></li>
+          </ul>
+        </li>
         <!-- End of Tenant -->
-        <li class="header">REPORTING</li>
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
-        
+        <li class="header">Laporan</li>
+        <li><a href="{{ route('report_income_expense') }}"><i class="fa fa-circle-o text-red"></i> <span>Pendapatan dan Pengeluaran</span></a></li>
+        <li><a href="{{ route('report_overdue') }}"><i class="fa fa-circle-o text-red"></i> <span>Keterlambatan Pembayaran</span></a></li>
+        <li><a href="{{ route('report_upcoming_income') }}"><i class="fa fa-circle-o text-red"></i> <span>Pendapatan Mendatang</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
@@ -156,8 +183,7 @@
     <div class="pull-right hidden-xs">
       <!-- <b>Version</b> 2.4.0 -->
     </div>
-    <strong>Copyright &copy; 2018 <a href="#">Propertiku</a>.</strong> All rights
-    reserved.
+    <strong>Copyright &copy; 2018 <a href="#">Propertiku</a>.</strong>
   </footer>
 </div>
 <!-- ./wrapper -->
